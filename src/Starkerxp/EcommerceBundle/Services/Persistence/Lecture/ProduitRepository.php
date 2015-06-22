@@ -1,6 +1,6 @@
 <?php
 
-namespace Starkerxp\EcommerceBundle\Services\Persistence\Lecture\Produit;
+namespace Starkerxp\EcommerceBundle\Services\Persistence\Lecture;
 
 use PDO;
 use Starkerxp\EcommerceBundle\Services\Domain\Marque\MarqueDTO;

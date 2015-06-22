@@ -2,7 +2,7 @@
 
 namespace Starkerxp\EcommerceBundle\Services\Query\Produit;
 
-use Starkerxp\EcommerceBundle\Services\Persistence\Lecture\Produit\ProduitRepository;
+use Starkerxp\EcommerceBundle\Services\Persistence\Lecture\ProduitRepository;
 use Starkerxp\CQRSESBundle\Services\Query\QueryHandlerInterface;
 use Starkerxp\CQRSESBundle\Services\Query\QueryInterface;
 

@@ -3,7 +3,7 @@
 namespace Starkerxp\EcommerceBundle\Forms\Produit;
 
 use Starkerxp\EcommerceBundle\Services\Adaptateur\Marque\CollectionVersChoixSelectElement;
-use Starkerxp\EcommerceBundle\Services\Persistence\Lecture\Marque\MarqueRepository;
+use Starkerxp\EcommerceBundle\Services\Persistence\Lecture\MarqueRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\Length;

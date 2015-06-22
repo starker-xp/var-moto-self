@@ -2,7 +2,7 @@
 
 namespace Starkerxp\EcommerceBundle\Services\Query\Marque;
 
-use Starkerxp\EcommerceBundle\Services\Persistence\Lecture\Marque\MarqueRepository;
+use Starkerxp\EcommerceBundle\Services\Persistence\Lecture\MarqueRepository;
 use Starkerxp\CQRSESBundle\Services\Query\QueryHandlerInterface;
 use Starkerxp\CQRSESBundle\Services\Query\QueryInterface;
 

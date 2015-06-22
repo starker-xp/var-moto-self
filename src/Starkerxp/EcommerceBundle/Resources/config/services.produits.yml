@@ -11,7 +11,7 @@ services :
             - [register, ["@handler.query.get_produit"]]
     # Repository
     repository.read.produit:
-        class: "Starkerxp\\EcommerceBundle\\Services\\Persistence\\Lecture\\Produit\\ProduitRepository"
+        class: "Starkerxp\\EcommerceBundle\\Services\\Persistence\\Lecture\\ProduitRepository"
         arguments: ["@doctrine.dbal.read_connection"]
     repository.write.produit:
         class: "Starkerxp\\EcommerceBundle\\Services\\Persistence\\Ecriture\\Produit\\ProduitRepository"

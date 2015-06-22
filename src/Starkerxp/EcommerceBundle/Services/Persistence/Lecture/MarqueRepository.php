@@ -1,6 +1,6 @@
 <?php
 
-namespace Starkerxp\EcommerceBundle\Services\Persistence\Lecture\Marque;
+namespace Starkerxp\EcommerceBundle\Services\Persistence\Lecture;
 
 use Starkerxp\EcommerceBundle\Services\Domain\Marque\MarqueDTO;
 use Starkerxp\EcommerceBundle\Services\Domain\Marque\MarqueCollection;

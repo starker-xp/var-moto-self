@@ -14,7 +14,7 @@ class ModifierProduitCommand implements CommandInterface
     private $quantite;
     private $marqueId;
 
-    public function depuisDTO(DTOInterface $dto)
+    public function depuisDTO($dto)
     {
         $this->setProduitId($dto->getId());
         $this->setLibelle($dto->getLibelle());

@@ -14,7 +14,7 @@ services :
             
     # Repository
     repository.read.marque:
-        class: "Starkerxp\\EcommerceBundle\\Services\\Persistence\\Lecture\\Marque\\MarqueRepository"
+        class: "Starkerxp\\EcommerceBundle\\Services\\Persistence\\Lecture\\MarqueRepository"
         arguments: ["@doctrine.dbal.read_connection"]
     repository.write.marque:
         class: "Starkerxp\\EcommerceBundle\\Services\\Persistence\\Ecriture\\Marque\\MarqueRepository"
