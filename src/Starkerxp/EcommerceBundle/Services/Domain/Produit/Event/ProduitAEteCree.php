@@ -4,7 +4,7 @@ namespace Starkerxp\EcommerceBundle\Services\Domain\Produit\Event;
 
 use \Starkerxp\CQRSESBundle\Services\Domain\EventInterface;
 
-class MarqueAEteCree implements EventInterface
+class ProduitAEteCree implements EventInterface
 {
 
     private $produitId;
@@ -12,13 +12,12 @@ class MarqueAEteCree implements EventInterface
     private $description;
     private $prix;
     private $quantite;
-    //
-    private $marque;
+    private $marqueId;
 
-    public function __construct($produitId, $marque, $libelle, $description, $prix, $quantite)
+    public function __construct($produitId, $marqueId, $libelle, $description, $prix, $quantite)
     {
         $this->produitId = $produitId;
-        $this->marque = $marque;
+        $this->marqueId = $marqueId;
         $this->libelle = $libelle;
         $this->description = $description;
         $this->prix = $prix;
@@ -50,9 +49,9 @@ class MarqueAEteCree implements EventInterface
         return $this->quantite;
     }
 
-    public function getMarque()
+    public function getMarqueId()
     {
-        return $this->marque;
+        return $this->marqueId;
     }
 
 }

@@ -3,6 +3,7 @@
 namespace Starkerxp\EcommerceBundle\Services\Domain\Produit;
 
 use Starkerxp\CQRSESBundle\Services\Domain\DomainEvents;
+use Starkerxp\EcommerceBundle\Services\Domain\Produit\Event\ProduitAEteCree;
 
 class ProduitDomain extends DomainEvents
 {

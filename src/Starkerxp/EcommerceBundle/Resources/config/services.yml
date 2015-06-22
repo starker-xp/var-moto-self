@@ -1,3 +1,7 @@
 services:
-
-            
+    form.ajouter.produit:
+        class: "Starkerxp\\EcommerceBundle\\Forms\\Produit\\CreationProduitForm"
+        arguments: ["@repository.read.marque"]
+    form.modifier.produit:
+        class: "Starkerxp\\EcommerceBundle\\Forms\\Produit\\ModificationProduitForm"
+        arguments: ["@repository.read.marque"]

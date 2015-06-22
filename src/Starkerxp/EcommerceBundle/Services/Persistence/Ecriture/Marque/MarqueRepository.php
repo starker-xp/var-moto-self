@@ -1,6 +1,6 @@
 <?php
 
-namespace Starkerxp\EcommerceBundle\Services\Persistence\Marque\Write;
+namespace Starkerxp\EcommerceBundle\Services\Persistence\Ecriture\Marque;
 
 use \Starkerxp\EcommerceBundle\Services\Domain\Marque\MarqueDomain;
 use \Starkerxp\CQRSESBundle\Services\Persistence\AbstractEventStore;

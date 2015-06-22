@@ -14,15 +14,15 @@ services :
             
     # Repository
     repository.read.marque:
-        class: "Starkerxp\\EcommerceBundle\\Services\\Persistence\\Marque\\Read\\MarqueRepository"
+        class: "Starkerxp\\EcommerceBundle\\Services\\Persistence\\Lecture\\Marque\\MarqueRepository"
         arguments: ["@doctrine.dbal.read_connection"]
     repository.write.marque:
-        class: "Starkerxp\\EcommerceBundle\\Services\\Persistence\\Marque\\Write\\MarqueRepository"
+        class: "Starkerxp\\EcommerceBundle\\Services\\Persistence\\Ecriture\\Marque\\MarqueRepository"
         arguments: ["@event_store", "@projection.marque"]
         
     # Projection
     projection.marque:
-        class: "Starkerxp\\EcommerceBundle\\Services\\Persistence\\Marque\\Write\\MarqueProjection"
+        class: "Starkerxp\\EcommerceBundle\\Services\\Persistence\\Ecriture\\Marque\\MarqueProjection"
         arguments: ["@doctrine.dbal.write_connection"]
         
     # Query

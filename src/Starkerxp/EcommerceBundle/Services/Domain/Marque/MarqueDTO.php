@@ -2,7 +2,9 @@
 
 namespace Starkerxp\EcommerceBundle\Services\Domain\Marque;
 
-class MarqueDTO
+use Starkerxp\CQRSESBundle\Services\Domain\DTOInterface;
+
+class MarqueDTO implements DTOInterface
 {
 
     private $id;

@@ -11,8 +11,7 @@ class CreerProduitCommand implements CommandInterface
     private $description;
     private $prix;
     private $quantite;
-    //
-    private $marque;
+    private $marqueId;
 
     /**
      * @return mixed
@@ -61,14 +60,14 @@ class CreerProduitCommand implements CommandInterface
         return $this;
     }
 
-    public function getMarque()
+    public function getMarqueId()
     {
-        return $this->marque;
+        return $this->marqueId;
     }
 
-    public function setMarque($marque)
+    public function setMarqueId($marqueId)
     {
-        $this->marque = $marque;
+        $this->marqueId = $marqueId;
         return $this;
     }
 

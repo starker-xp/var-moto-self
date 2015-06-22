@@ -1,6 +1,6 @@
 <?php
 
-namespace Starkerxp\EcommerceBundle\Services\Persistence\Marque\Write;
+namespace Starkerxp\EcommerceBundle\Services\Persistence\Ecriture\Marque;
 
 use PDO;
 use Starkerxp\EcommerceBundle\Services\Domain\Marque\Event\MarqueAEteCree;

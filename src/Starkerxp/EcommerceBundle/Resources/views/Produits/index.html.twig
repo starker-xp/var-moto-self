@@ -1,5 +1,33 @@
 {% extends '::base.html.twig' %}
+{% set token = csrf_token('') %}
+
+{% block h1 %}Gestion des produits{% endblock %}
 
 {% block body %}
-    Page des produits.
+    <div class="entypo circled-plus color-primary" ><a class="small" href="{{ path('formulaire_creation_produit') }}">Ajouter une produit</a></div>
+    <ul>
+        {% for produit in produits %}
+            <li>{{ produit.libelle }} <a href="{{ path('formulaire_modification_produit', {'produitId': produit.id}) }}">Modifier</a> / <a class="delete" data-href="{{ path('suppression_produit', {'produitId': produit.id}) }}" data-csrf="{{ token }}">Supprimer</a></li>
+            {% endfor %}
+    </ul>
+{% endblock %}
+
+{% block javascripts %}
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.delete').click(function (event) {
+                event.preventDefault();
+                $.ajax({
+                    url: $(this).data('href'),
+                    type: 'delete',
+                    data : {
+                        _token: $(this).data('csrf')
+                    },
+                    success : function(json){
+                        console.log(json);
+                    }
+                });
+            });
+        });
+    </script>
 {% endblock %}

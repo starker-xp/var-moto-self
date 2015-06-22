@@ -3,7 +3,7 @@
 namespace Starkerxp\EcommerceBundle\Services\Command\Marque;
 
 use Starkerxp\EcommerceBundle\Services\Domain\Marque\MarqueDomain;
-use Starkerxp\EcommerceBundle\Services\Persistence\Marque\Write\MarqueRepository;
+use Starkerxp\EcommerceBundle\Services\Persistence\Ecriture\Marque\MarqueRepository;
 use Starkerxp\CQRSESBundle\Services\Command\CommandHandlerInterface;
 use Starkerxp\CQRSESBundle\Services\Command\CommandInterface;
 use Rhumsaa\Uuid\Uuid;

@@ -1,8 +1,9 @@
 <?php
 
-namespace Starkerxp\EcommerceBundle\Services\Persistence\Marque\Read;
+namespace Starkerxp\EcommerceBundle\Services\Persistence\Lecture\Marque;
 
 use Starkerxp\EcommerceBundle\Services\Domain\Marque\MarqueDTO;
+use Starkerxp\EcommerceBundle\Services\Domain\Marque\MarqueCollection;
 
 class MarqueRepository
 {
@@ -16,14 +17,14 @@ class MarqueRepository
 
     public function lister()
     {
+        $marqueCollection = new MarqueCollection();
         $stmt = $this->pdo->query('SELECT * FROM marques');
         $stmt->execute();
-        $marques = [];
         $resultSets = $stmt->fetchAll(\PDO::FETCH_ASSOC);
         foreach ($resultSets as $row) {
-            $marques[] = new MarqueDTO($row['id'], $row['libelle']);
+            $marqueCollection->ajouter(new MarqueDTO($row['id'], $row['libelle']));
         }
-        return $marques;
+        return $marqueCollection;
     }
 
     public function get($marqueId)
