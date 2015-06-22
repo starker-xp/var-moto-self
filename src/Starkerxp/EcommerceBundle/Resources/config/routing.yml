@@ -1,0 +1,3 @@
+starkerxp_ecommerce_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: StarkerxpEcommerceBundle:Default:index }

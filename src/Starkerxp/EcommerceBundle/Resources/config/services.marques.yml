@@ -1,0 +1,45 @@
+services :
+    # Bus
+    bus.command.marque:
+        class: "Starkerxp\\CQRSESBundle\\Services\\Command\\CommandBus"
+        calls:
+            - [register, ["@handler.command.creation_marque"]]
+            - [register, ["@handler.command.modification_marque"]]
+            - [register, ["@handler.command.supprimer_marque"]]
+    bus.event.marque:
+        class: "Starkerxp\\CQRSESBundle\\Services\\Query\\QueryBus"
+        calls:
+            - [register, ["@handler.query.lister_marque"]]
+            - [register, ["@handler.query.get_marque"]]
+            
+    # Repository
+    repository.read.marque:
+        class: "Starkerxp\\EcommerceBundle\\Services\\Persistence\\Marque\\Read\\MarqueRepository"
+        arguments: ["@doctrine.dbal.read_connection"]
+    repository.write.marque:
+        class: "Starkerxp\\EcommerceBundle\\Services\\Persistence\\Marque\\Write\\MarqueRepository"
+        arguments: ["@event_store", "@projection.marque"]
+        
+    # Projection
+    projection.marque:
+        class: "Starkerxp\\EcommerceBundle\\Services\\Persistence\\Marque\\Write\\MarqueProjection"
+        arguments: ["@doctrine.dbal.write_connection"]
+        
+    # Query
+    handler.query.lister_marque:
+        class: "Starkerxp\\EcommerceBundle\\Services\\Query\\Marque\\MarqueListerQueryHandler"
+        arguments: ["@repository.read.marque"]
+    handler.query.get_marque:
+        class: "Starkerxp\\EcommerceBundle\\Services\\Query\\Marque\\MarqueQueryHandler"
+        arguments: ["@repository.read.marque"]
+        
+    # Command
+    handler.command.creation_marque:
+        class: "Starkerxp\\EcommerceBundle\\Services\\Command\\Marque\\CreationMarqueHandler"
+        arguments: ["@repository.write.marque"]
+    handler.command.modification_marque:
+        class: "Starkerxp\\EcommerceBundle\\Services\\Command\\Marque\\ModificationMarqueHandler"
+        arguments: ["@repository.write.marque"]
+    handler.command.supprimer_marque:
+        class: "Starkerxp\\EcommerceBundle\\Services\\Command\\Marque\\SupprimerMarqueHandler"
+        arguments: ["@repository.write.marque"]

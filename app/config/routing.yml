@@ -1,0 +1,4 @@
+starkerxp_ecommerce:
+    resource: "@StarkerxpEcommerceBundle/Controller"
+    type:     annotation
+

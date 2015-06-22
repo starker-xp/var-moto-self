@@ -1,0 +1,33 @@
+{% extends '::base.html.twig' %}
+{% set token = csrf_token('') %}
+
+{% block h1 %}Gestion des marques{% endblock %}
+
+{% block body %}
+    <div class="entypo circled-plus color-primary" ><a class="small" href="{{ path('formulaire_creation_marque') }}">Ajouter une marque</a></div>
+    <ul>
+        {% for marque in marques %}
+            <li>{{ marque.libelle }} <a href="{{ path('formulaire_modification_marque', {'marqueId': marque.id}) }}">Modifier</a> / <a class="delete" data-href="{{ path('suppression_marque', {'marqueId': marque.id}) }}" data-csrf="{{ token }}">Supprimer</a></li>
+            {% endfor %}
+    </ul>
+{% endblock %}
+
+{% block javascripts %}
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.delete').click(function (event) {
+                event.preventDefault();
+                $.ajax({
+                    url: $(this).data('href'),
+                    type: 'delete',
+                    data : {
+                        _token: $(this).data('csrf')
+                    },
+                    success : function(json){
+                        console.log(json);
+                    }
+                });
+            });
+        });
+    </script>
+{% endblock %}

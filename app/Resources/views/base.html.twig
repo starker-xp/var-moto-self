@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8" />
+        <title>{% block title %}Var MotoSelf{% endblock %}</title>
+        {% stylesheets output="css/main.css" filter="cssrewrite"
+            'libraries/font-awesome/css/font-awesome.min.css'
+            'libraries/chosen/chosen.min.css'
+            'libraries/rangeSlider/css/ion.rangeSlider.css'
+            'libraries/rangeSlider/css/ion.rangeSlider.skinNice.css'
+            'css/directory.css'
+            'libraries/bootstrap-vertical-tabs/bootstrap.vertical-tabs.min.css'
+        %}
+        <link rel="stylesheet" href="{{ asset_url }}">
+        {% endstylesheets  %}
+    {% block stylesheets %}{% endblock %}
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+</head>
+<body class="layout-landing header-with-border">
+    <div id="page">
+        <div id="header-wrapper">
+            <div id="header" class="no-border-top">
+                <div id="header-inner">
+                    <nav class="navbar navbar-default">
+                        <div class="container">
+                            <div class="navbar-header">
+                                <a class="navbar-brand" href="/">
+                                    <span class="logo-styled">
+                                        <span class="logo-title">
+                                            <img src="{{ asset('/img/logo-directory.png') }}" alt=""> VAR MOTOSELF
+                                        </span>
+                                        <span class="logo-subtitle hidden-sm">Spécialiste de la pièce<br>moto d'occasion pour Trail</span>
+                                    </span>
+                                </a>
+
+                                <div class="navbar-description navbar-right hidden-xs header-2-row">
+                                    {% block header %}Mon header{% endblock %}
+                                </div>
+                            </div>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </div>
+        <div id="main-wrapper">
+            <div id="main">
+                <div id="main-inner">
+                    <div class="container">
+                        <div class="block-content">
+                            <div class="block-content-inner">
+                                <h1>{% block h1 %}{% endblock %}</h1>
+                            {% block body %}{% endblock %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="footer-wrapper">
+        <div id="footer">
+            <div id="footer-inner">
+
+                <div class="footer-bottom">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-12 col-md-6">
+                                <nav class="clearfix">
+                                    <ul class="nav navbar-nav footer-nav">
+                                        <li><a href="{{ path('contact') }}">Contact</a></li>
+                                        <li><a href="{{ path('mentions_legales') }}">Mentions légales</a></li>
+                                        <li><a href="{{ path('faq') }}">Faq</a></li>
+                                    </ul>
+                                </nav>
+                            </div>
+                            <div class="col-md-6">
+                                <p class="copyright">
+                                    Créé par <a href="{{ path('homepage') }}">Starker-xp.net</a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% javascripts output="js/main.js" 
+            'js/libraries/jquery.js'
+            'libraries/bxslider/jquery.bxslider.js'
+            'libraries/chosen/chosen.jquery.min.js'
+            'libraries/isotope/jquery.isotope.min.js'
+            'libraries/rangeSlider/js/ion-rangeSlider/ion.rangeSlider.min.js'
+            'libraries/bootstrap/javascripts/bootstrap/tab.js'
+            'libraries/bootstrap/javascripts/bootstrap/collapse.js'
+            'js/director.js'
+%}
+<script type="text/javascript" src="{{ asset_url }}"></script>
+{% endjavascripts  %}
+{% block javascripts %}{% endblock %}
+</body>
+</html>
