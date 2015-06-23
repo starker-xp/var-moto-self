@@ -2,7 +2,7 @@
 
 namespace Starkerxp\EcommerceBundle\Services\Persistence\Ecriture\Marque;
 
-use PDO;
+use Doctrine\DBAL\Connection;
 use Starkerxp\EcommerceBundle\Services\Domain\Marque\Event\MarqueAEteCree;
 use Starkerxp\EcommerceBundle\Services\Domain\Marque\Event\ModificationLibelleMarque;
 use Starkerxp\EcommerceBundle\Services\Domain\Marque\Event\UneMarqueAEteSupprime;
@@ -10,12 +10,9 @@ use Starkerxp\EcommerceBundle\Services\Domain\Marque\Event\UneMarqueAEteSupprime
 class MarqueProjection
 {
 
-    /**
-     * @var PDO
-     */
     private $pdo;
 
-    public function __construct($pdo)
+    public function __construct(Connection $pdo)
     {
         $this->pdo = $pdo;
     }

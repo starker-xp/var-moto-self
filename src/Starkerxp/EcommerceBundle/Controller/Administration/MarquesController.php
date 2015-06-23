@@ -2,6 +2,8 @@
 
 namespace Starkerxp\EcommerceBundle\Controller\Administration;
 
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Starkerxp\EcommerceBundle\Forms\Marque\CreationMarqueForm;
 use Starkerxp\EcommerceBundle\Forms\Marque\ModificationMarqueForm;
 use Starkerxp\EcommerceBundle\Services\Command\Marque\CreationMarqueCommand;
@@ -9,8 +11,6 @@ use Starkerxp\EcommerceBundle\Services\Command\Marque\ModificationMarqueCommand;
 use Starkerxp\EcommerceBundle\Services\Command\Marque\SupprimerMarqueCommand;
 use Starkerxp\EcommerceBundle\Services\Query\Marque\MarqueListerQuery;
 use Starkerxp\EcommerceBundle\Services\Query\Marque\MarqueQuery;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;

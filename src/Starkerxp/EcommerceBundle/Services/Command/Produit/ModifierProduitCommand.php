@@ -48,7 +48,7 @@ class ModifierProduitCommand implements CommandInterface
 
     public function getPrix()
     {
-        return number_format($this->prix / 100, 2);
+        return $this->prix;
     }
 
     public function getQuantite()

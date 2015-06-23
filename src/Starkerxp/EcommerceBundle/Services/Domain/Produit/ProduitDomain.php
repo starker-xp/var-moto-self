@@ -3,8 +3,12 @@
 namespace Starkerxp\EcommerceBundle\Services\Domain\Produit;
 
 use Starkerxp\CQRSESBundle\Services\Domain\DomainEvents;
-use Starkerxp\EcommerceBundle\Services\Domain\Produit\Event\LeProduitAEteModifie;
 use Starkerxp\EcommerceBundle\Services\Domain\Produit\Event\ProduitAEteCree;
+use Starkerxp\EcommerceBundle\Services\Domain\Produit\Event\UneModificationDeLaDescriptionProduit;
+use Starkerxp\EcommerceBundle\Services\Domain\Produit\Event\UneModificationDeLaMarqueProduit;
+use Starkerxp\EcommerceBundle\Services\Domain\Produit\Event\UneModificationDeLaQuantiteProduit;
+use Starkerxp\EcommerceBundle\Services\Domain\Produit\Event\UneModificationDuLibelleProduit;
+use Starkerxp\EcommerceBundle\Services\Domain\Produit\Event\UneModificationDuPrixProduit;
 
 class ProduitDomain extends DomainEvents
 {
@@ -138,6 +142,9 @@ class ProduitDomain extends DomainEvents
 
     public function modifierLeProduit($command)
     {
+        if ($this->prix != ($prix = $command->getPrix())) {
+            $this->modifierLePrix($prix);
+        }
         if ($this->libelle != ($libelle = $command->getLibelle())) {
             $this->modifierLeLibelle($libelle);
         }
