@@ -22,7 +22,7 @@ class ModifierProduitHandler implements CommandHandlerInterface
     public function handle(CommandInterface $command)
     {
         $produit = $this->produitRepository->get($command->getProduitId());
-        $produit->modifier($command->getLibelle());
+        $produit->modifierLeProduit($command);
         $this->produitRepository->ajouter($produit);
     }
 

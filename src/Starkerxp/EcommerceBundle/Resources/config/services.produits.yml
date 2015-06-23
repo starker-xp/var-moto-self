@@ -4,6 +4,8 @@ services :
         class: "Starkerxp\\CQRSESBundle\\Services\\Command\\CommandBus"
         calls:
             - [register, ["@handler.command.creation_produit"]]
+            - [register, ["@handler.command.modification_produit"]]
+            
     bus.event.produit:
         class: "Starkerxp\\CQRSESBundle\\Services\\Query\\QueryBus"
         calls:
@@ -26,7 +28,10 @@ services :
     handler.command.creation_produit:
         class: "Starkerxp\\EcommerceBundle\\Services\\Command\\Produit\\CreerProduitHandler"
         arguments: ["@repository.write.produit"]
-
+    handler.command.modification_produit:
+        class: "Starkerxp\\EcommerceBundle\\Services\\Command\\Produit\\ModifierProduitHandler"
+        arguments: ["@repository.write.produit"]
+        
     # Query
     handler.query.lister_produit:
         class: "Starkerxp\\EcommerceBundle\\Services\\Query\\Produit\\ProduitListerQueryHandler"
