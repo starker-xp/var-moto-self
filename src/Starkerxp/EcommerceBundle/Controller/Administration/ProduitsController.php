@@ -6,6 +6,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Starkerxp\EcommerceBundle\Services\Command\Produit\CreerProduitCommand;
 use Starkerxp\EcommerceBundle\Services\Command\Produit\ModifierProduitCommand;
+use Starkerxp\EcommerceBundle\Services\Command\Produit\SupprimerProduitCommand;
 use Starkerxp\EcommerceBundle\Services\Query\Produit\ProduitListerQuery;
 use Starkerxp\EcommerceBundle\Services\Query\Produit\ProduitQuery;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;

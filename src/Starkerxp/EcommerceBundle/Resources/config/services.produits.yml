@@ -5,6 +5,7 @@ services :
         calls:
             - [register, ["@handler.command.creation_produit"]]
             - [register, ["@handler.command.modification_produit"]]
+            - [register, ["@handler.command.supprimer_produit"]]
             
     bus.event.produit:
         class: "Starkerxp\\CQRSESBundle\\Services\\Query\\QueryBus"
@@ -39,3 +40,6 @@ services :
     handler.query.get_produit:
         class: "Starkerxp\\EcommerceBundle\\Services\\Query\\Produit\\ProduitQueryHandler"
         arguments: ["@repository.read.produit"]
+    handler.command.supprimer_produit:
+        class: "Starkerxp\\EcommerceBundle\\Services\\Command\\Produit\\SupprimerProduitHandler"
+        arguments: ["@repository.write.produit"]

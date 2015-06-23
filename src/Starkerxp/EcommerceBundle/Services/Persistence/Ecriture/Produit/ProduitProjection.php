@@ -9,6 +9,7 @@ use Starkerxp\EcommerceBundle\Services\Domain\Produit\Event\UneModificationDeLaM
 use Starkerxp\EcommerceBundle\Services\Domain\Produit\Event\UneModificationDeLaQuantiteProduit;
 use Starkerxp\EcommerceBundle\Services\Domain\Produit\Event\UneModificationDuLibelleProduit;
 use Starkerxp\EcommerceBundle\Services\Domain\Produit\Event\UneModificationDuPrixProduit;
+use Starkerxp\EcommerceBundle\Services\Domain\Produit\Event\UnProduitAEteSupprime;
 
 class ProduitProjection
 {
@@ -96,6 +97,15 @@ class ProduitProjection
         $stmt->execute([
             ':produit_id' => $event->getAggregateId(),
             ':prix' => $event->getPrix(),
+        ]);
+    }
+
+    public function projectUnProduitAEteSupprime(UnProduitAEteSupprime $event)
+    {
+        $sql = 'DELETE FROM produits WHERE id= :produit_id';
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([
+            ':produit_id' => $event->getAggregateId()
         ]);
     }
 

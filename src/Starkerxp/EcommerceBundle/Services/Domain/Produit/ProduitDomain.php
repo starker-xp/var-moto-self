@@ -9,6 +9,7 @@ use Starkerxp\EcommerceBundle\Services\Domain\Produit\Event\UneModificationDeLaM
 use Starkerxp\EcommerceBundle\Services\Domain\Produit\Event\UneModificationDeLaQuantiteProduit;
 use Starkerxp\EcommerceBundle\Services\Domain\Produit\Event\UneModificationDuLibelleProduit;
 use Starkerxp\EcommerceBundle\Services\Domain\Produit\Event\UneModificationDuPrixProduit;
+use Starkerxp\EcommerceBundle\Services\Domain\Produit\Event\UnProduitAEteSupprime;
 
 class ProduitDomain extends DomainEvents
 {
@@ -145,6 +146,7 @@ class ProduitDomain extends DomainEvents
         if ($this->prix != ($prix = $command->getPrix())) {
             $this->modifierLePrix($prix);
         }
+
         if ($this->libelle != ($libelle = $command->getLibelle())) {
             $this->modifierLeLibelle($libelle);
         }
@@ -164,6 +166,12 @@ class ProduitDomain extends DomainEvents
         if ($this->marqueId != ($marqueId = $command->getMarqueId())) {
             $this->modifierLaMarque($marqueId);
         }
+    }
+
+    public function supprimerUnProduit()
+    {
+        $event = new UnProduitAEteSupprime($this->produitId);
+        $this->enregistrementEvenement($event);
     }
 
 }
