@@ -2,26 +2,14 @@
 
 namespace Starkerxp\EcommerceBundle\Services\Domain\Produit;
 
-use ArrayObject;
+use Starkerxp\CQRSESBundle\Services\Domain\AbstractCollection;
 
-class ProduitCollection
+class ProduitCollection extends AbstractCollection
 {
 
-    private $produitCollection;
-
-    public function __construct()
+    public function ajouter(ProduitDTO $marqueDto)
     {
-        $this->produitCollection = new ArrayObject([]);
-    }
-
-    public function ajouter(ProduitDTO $produitDto)
-    {
-        $this->produitCollection->append($produitDto);
-    }
-
-    public function getCollection()
-    {
-        return $this->produitCollection;
+        $this->collection->append($marqueDto);
     }
 
 }

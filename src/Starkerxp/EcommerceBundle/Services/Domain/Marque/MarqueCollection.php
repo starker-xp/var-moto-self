@@ -2,26 +2,14 @@
 
 namespace Starkerxp\EcommerceBundle\Services\Domain\Marque;
 
-use ArrayObject;
+use Starkerxp\CQRSESBundle\Services\Domain\AbstractCollection;
 
-class MarqueCollection
+class MarqueCollection extends AbstractCollection
 {
-
-    private $marqueCollection;
-
-    public function __construct()
-    {
-        $this->marqueCollection = new ArrayObject([]);
-    }
 
     public function ajouter(MarqueDTO $marqueDto)
     {
-        $this->marqueCollection->append($marqueDto);
-    }
-
-    public function getCollection()
-    {
-        return $this->marqueCollection;
+        $this->collection->append($marqueDto);
     }
 
 }
