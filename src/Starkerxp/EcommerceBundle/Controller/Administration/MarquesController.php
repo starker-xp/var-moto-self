@@ -19,7 +19,7 @@ class MarquesController extends Controller
 {
 
     /**
-     * @Route("/marques/", name="liste_marques")
+     * @Route("/administration/marques/", name="liste_marques")
      * @Method({"GET"})
      */
     public function indexAction()
@@ -34,7 +34,7 @@ class MarquesController extends Controller
     }
 
     /**
-     * @Route("/marques/ajouter.html", name="formulaire_creation_marque")
+     * @Route("/administration/marques/ajouter.html", name="formulaire_creation_marque")
      * @Method({"GET"})
      */
     public function createAction()
@@ -50,7 +50,7 @@ class MarquesController extends Controller
     }
 
     /**
-     * @Route("/marques/ajouter.html", name="creation_marque")
+     * @Route("/administration/marques/ajouter.html", name="creation_marque")
      * @Method({"POST"})
      */
     public function postAction(Request $request)
@@ -72,7 +72,7 @@ class MarquesController extends Controller
     }
 
     /**
-     * @Route("/marques/modifier/{marqueId}.html", name="formulaire_modification_marque", requirements ={"marqueId" = "[a-z0-9]{8}\-[a-z0-9]{4}\-[a-z0-9]{4}\-[a-z0-9]{4}\-[a-z0-9]{12}"})
+     * @Route("/administration/marques/modifier/{marqueId}.html", name="formulaire_modification_marque", requirements ={"marqueId" = "[a-z0-9]{8}\-[a-z0-9]{4}\-[a-z0-9]{4}\-[a-z0-9]{4}\-[a-z0-9]{12}"})
      * @Method({"GET"})
      */
     public function editAction($marqueId)
@@ -98,7 +98,7 @@ class MarquesController extends Controller
     }
 
     /**
-     * @Route("/marques/modifier/{marqueId}.html", name="modification_marque", requirements ={"marqueId" = "[a-z0-9]{8}\-[a-z0-9]{4}\-[a-z0-9]{4}\-[a-z0-9]{4}\-[a-z0-9]{12}"})
+     * @Route("/administration/marques/modifier/{marqueId}.html", name="modification_marque", requirements ={"marqueId" = "[a-z0-9]{8}\-[a-z0-9]{4}\-[a-z0-9]{4}\-[a-z0-9]{4}\-[a-z0-9]{12}"})
      * @Method({"PUT"})
      */
     public function putAction(Request $request, $marqueId)
@@ -124,7 +124,7 @@ class MarquesController extends Controller
     }
 
     /**
-     * @Route("/marques/supprimer/{marqueId}.html", name="suppression_marque", requirements ={"marqueId" = "[a-z0-9]{8}\-[a-z0-9]{4}\-[a-z0-9]{4}\-[a-z0-9]{4}\-[a-z0-9]{12}"})
+     * @Route("/administration/marques/supprimer/{marqueId}.html", name="suppression_marque", requirements ={"marqueId" = "[a-z0-9]{8}\-[a-z0-9]{4}\-[a-z0-9]{4}\-[a-z0-9]{4}\-[a-z0-9]{12}"})
      * @Method({"DELETE"})
      */
     public function deleteAction(Request $request, $marqueId)

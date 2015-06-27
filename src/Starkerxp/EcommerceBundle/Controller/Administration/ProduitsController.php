@@ -17,7 +17,7 @@ class ProduitsController extends Controller
 {
 
     /**
-     * @Route("/produits/", name="liste_produits")
+     * @Route("/administration/produits/", name="liste_produits")
      * @Method({"GET"})
      */
     public function indexAction()
@@ -33,7 +33,7 @@ class ProduitsController extends Controller
     }
 
     /**
-     * @Route("/produits/ajouter.html", name="formulaire_creation_produit")
+     * @Route("/administration/produits/ajouter.html", name="formulaire_creation_produit")
      * @Method({"GET"})
      */
     public function createAction()
@@ -48,7 +48,7 @@ class ProduitsController extends Controller
     }
 
     /**
-     * @Route("/produits/ajouter.html", name="creation_produit")
+     * @Route("/administration/produits/ajouter.html", name="creation_produit")
      * @Method({"POST"})
      */
     public function postAction(Request $request)
@@ -71,7 +71,7 @@ class ProduitsController extends Controller
     }
 
     /**
-     * @Route("/produits/modifier/{produitId}.html", name="formulaire_modification_produit", requirements ={"produitId" = "[a-z0-9]{8}\-[a-z0-9]{4}\-[a-z0-9]{4}\-[a-z0-9]{4}\-[a-z0-9]{12}"})
+     * @Route("/administration/produits/modifier/{produitId}.html", name="formulaire_modification_produit", requirements ={"produitId" = "[a-z0-9]{8}\-[a-z0-9]{4}\-[a-z0-9]{4}\-[a-z0-9]{4}\-[a-z0-9]{12}"})
      * @Method({"GET"})
      */
     public function editAction($produitId)
@@ -96,7 +96,7 @@ class ProduitsController extends Controller
     }
 
     /**
-     * @Route("/produits/modifier/{produitId}.html", name="modification_produit", requirements ={"produitId" = "[a-z0-9]{8}\-[a-z0-9]{4}\-[a-z0-9]{4}\-[a-z0-9]{4}\-[a-z0-9]{12}"})
+     * @Route("/administration/produits/modifier/{produitId}.html", name="modification_produit", requirements ={"produitId" = "[a-z0-9]{8}\-[a-z0-9]{4}\-[a-z0-9]{4}\-[a-z0-9]{4}\-[a-z0-9]{12}"})
      * @Method({"PUT"})
      */
     public function putAction(Request $request, $produitId)
@@ -122,7 +122,7 @@ class ProduitsController extends Controller
     }
 
     /**
-     * @Route("/produits/supprimer/{produitId}.html", name="suppression_produit", requirements ={"produitId" = "[a-z0-9]{8}\-[a-z0-9]{4}\-[a-z0-9]{4}\-[a-z0-9]{4}\-[a-z0-9]{12}"})
+     * @Route("/administration/produits/supprimer/{produitId}.html", name="suppression_produit", requirements ={"produitId" = "[a-z0-9]{8}\-[a-z0-9]{4}\-[a-z0-9]{4}\-[a-z0-9]{4}\-[a-z0-9]{12}"})
      * @Method({"DELETE"})
      */
     public function deleteAction(Request $request, $produitId)

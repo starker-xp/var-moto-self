@@ -19,6 +19,11 @@ class SupprimerMarqueHandler implements CommandHandlerInterface
         $this->marqueRepository = $marqueRepository;
     }
 
+    /**
+     * Permet de déclencher la commande de suppression d'une marque.
+     * 
+     * @param CommandInterface $command
+     */
     public function handle(CommandInterface $command)
     {
         $marque = $this->marqueRepository->get($command->getMarqueId());

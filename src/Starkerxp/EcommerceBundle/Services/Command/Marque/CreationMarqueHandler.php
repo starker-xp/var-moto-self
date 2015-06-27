@@ -21,6 +21,13 @@ class CreationMarqueHandler implements CommandHandlerInterface
         $this->marqueRepository = $marqueRepository;
     }
 
+    /**
+     * Déclenche la commande afin de créer une nouvelle marque.
+     *
+     * @param CommandInterface $command
+     *
+     * @return void
+     */
     public function handle(CommandInterface $command)
     {
         $uuid = Uuid::uuid4()->toString();

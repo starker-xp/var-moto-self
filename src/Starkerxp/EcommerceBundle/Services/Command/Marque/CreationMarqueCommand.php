@@ -10,7 +10,7 @@ class CreationMarqueCommand implements CommandInterface
     private $libelle;
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getLibelle()
     {

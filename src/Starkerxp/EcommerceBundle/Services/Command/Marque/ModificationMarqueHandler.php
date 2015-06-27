@@ -19,6 +19,11 @@ class ModificationMarqueHandler implements CommandHandlerInterface
         $this->marqueRepository = $marqueRepository;
     }
 
+    /**
+     * Permet de déclencher la commande de modification du libelle.
+     *
+     * @param CommandInterface $command
+     */
     public function handle(CommandInterface $command)
     {
         $marque = $this->marqueRepository->get($command->getMarqueId());

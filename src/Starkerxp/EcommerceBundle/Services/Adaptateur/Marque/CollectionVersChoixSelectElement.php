@@ -12,6 +12,11 @@ class CollectionVersChoixSelectElement
         $this->marqueCollection = $marqueCollection->getCollection();
     }
 
+    /**
+     * Convertit les objets d'une collection en un tableau de données.
+     *
+     * @return array
+     */
     public function versDonneesFormulaire()
     {
         $donnees = [];
