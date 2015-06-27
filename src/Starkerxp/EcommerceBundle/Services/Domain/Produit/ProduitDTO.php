@@ -8,17 +8,17 @@ class ProduitDTO implements DTOInterface
 {
 
     private $id;
-    private $marque;
+    private $marqueId;
     private $libelle;
     private $description;
     private $prix;
     private $quantite;
     private $sku;
 
-    public function __construct($id, $marque, $libelle, $description, $prix, $quantite, $sku)
+    public function __construct($id, $marqueId, $libelle, $description, $prix, $quantite, $sku)
     {
         $this->id = $id;
-        $this->marque = $marque;
+        $this->marqueId = $marqueId;
         $this->libelle = $libelle;
         $this->description = $description;
         $this->prix = $prix;
@@ -36,9 +36,9 @@ class ProduitDTO implements DTOInterface
         return $this->libelle;
     }
 
-    public function getMarque()
+    public function getMarqueId()
     {
-        return $this->marque;
+        return $this->marqueId;
     }
 
     public function getDescription()

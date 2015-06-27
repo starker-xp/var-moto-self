@@ -7,7 +7,7 @@
     <div class="entypo circled-plus color-primary" ><a class="small" href="{{ path('formulaire_creation_produit') }}">Ajouter une produit</a></div>
     <ul>
         {% for produit in produits %}
-            <li>{{ produit.libelle }} <a href="{{ path('formulaire_modification_produit', {'produitId': produit.id}) }}">Modifier</a> / <a class="delete" data-href="{{ path('suppression_produit', {'produitId': produit.id}) }}" data-csrf="{{ token }}">Supprimer</a></li>
+            <li>{{ produit.libelle }}/{{ produit.marque.libelle }} <a href="{{ path('formulaire_modification_produit', {'produitId': produit.id}) }}">Modifier</a> / <a class="delete" data-href="{{ path('suppression_produit', {'produitId': produit.id}) }}" data-csrf="{{ token }}">Supprimer</a></li>
             {% endfor %}
     </ul>
 {% endblock %}

@@ -2,9 +2,10 @@
 
 namespace Starkerxp\EcommerceBundle\Services\Query\Produit;
 
-use Starkerxp\EcommerceBundle\Services\Persistence\Lecture\ProduitRepository;
 use Starkerxp\CQRSESBundle\Services\Query\QueryHandlerInterface;
 use Starkerxp\CQRSESBundle\Services\Query\QueryInterface;
+use Starkerxp\EcommerceBundle\Services\Domain\Produit\ProduitPOPO;
+use Starkerxp\EcommerceBundle\Services\Persistence\Lecture\ProduitRepository;
 
 class ProduitQueryHandler implements QueryHandlerInterface
 {
@@ -16,10 +17,17 @@ class ProduitQueryHandler implements QueryHandlerInterface
         $this->produitRepository = $produitRepository;
     }
 
+    /**
+     * On exécute la requête de recherche d'un produit.
+     *
+     * @param QueryInterface $produitQuery
+     *
+     * @return ProduitPOPO
+     */
     public function handle(QueryInterface $produitQuery)
     {
-        $row = $this->produitRepository->get($produitQuery->getId());
-        return $row;
+        $produit = $this->produitRepository->get($produitQuery->getId());
+        return $produit;
     }
 
 }
