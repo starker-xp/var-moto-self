@@ -6,6 +6,24 @@ imports:
 # Put parameters here that don't need to change on each machine where the app is deployed
 # http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
+    db_write_host: 127.0.0.1
+    db_write_port: null
+    db_write_name: sf_moto
+    db_write_user: root
+    db_write_password: 123
+    
+    db_read_host: 127.0.0.1
+    db_read_port: null
+    db_read_name: sf_moto
+    db_read_user: root
+    db_read_password: 123
+    
+    db_event_host: 127.0.0.1
+    db_event_port: null
+    db_event_name: sf_moto
+    db_event_user: root
+    db_event_password: 123
+    
     locale: fr
 
 framework:

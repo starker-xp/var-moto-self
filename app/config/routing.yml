@@ -1,4 +1,5 @@
 starkerxp_ecommerce:
-    resource: "@StarkerxpEcommerceBundle/Controller"
-    type:     annotation
+    resource: "@StarkerxpEcommerceBundle/Resources/config/routing.yml"
+starkerxp_utilisateur:
+    resource: "@StarkerxpUtilisateurBundle/Resources/config/routing.yml"
 

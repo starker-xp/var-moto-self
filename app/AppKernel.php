@@ -19,6 +19,7 @@ class AppKernel extends Kernel
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new Starkerxp\CQRSESBundle\StarkerxpCQRSESBundle(),
             new Starkerxp\EcommerceBundle\StarkerxpEcommerceBundle(),
+            new Starkerxp\UtilisateurBundle\StarkerxpUtilisateurBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

@@ -1,12 +1,26 @@
 security:
     providers:
-        in_memory:
-            memory: ~
-
+        authentification_utilisateurs:
+            id: repository.read.utilisateur
+    role_hierarchy:
+        ROLE_ADMIN:       ROLE_USER
+    encoders:
+        Starkerxp\UtilisateurBundle\Services\Domain\Utilisateur\UtilisateurPOPO: plaintext
+        
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt|error)|css|images|js)/
             security: false
-
         default:
             anonymous: ~
+            http_basic: ~
+            form_login:
+                login_path: /login.html
+                check_path: /identification.html
+                default_target_path: /
+            logout:
+                path:   /deconnexion.html
+                target: /
+    access_control:
+        - { path: /login.html, roles: IS_ANONYMOUS }
+        - { path: ^/administration, roles: ROLE_ADMIN }

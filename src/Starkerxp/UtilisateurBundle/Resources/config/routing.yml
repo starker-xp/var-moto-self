@@ -1,0 +1,55 @@
+#################################
+# AuthentificationController
+#################################
+login:
+    path: /login.html
+    defaults: { _controller: StarkerxpUtilisateurBundle:Authentification:login }
+    methods:  [GET]
+        
+identification:
+    path: /identification.html
+    defaults: { _controller: StarkerxpUtilisateurBundle:Authentification:loginCheck }
+    methods:  [POST]
+
+deconnexion:
+    path:   /deconnexion.html
+    methods:  [GET]
+        
+#################################
+# AdministrationUtilisateursController
+#################################
+liste_utilisateurs:
+    path: /administration/utilisateurs/
+    defaults: { _controller: StarkerxpUtilisateurBundle:AdministrationUtilisateurs:index }
+    methods:  [GET]
+
+formulaire_creation_utilisateur:
+    path: /administration/utilisateurs/ajouter.html
+    defaults: { _controller: StarkerxpUtilisateurBundle:AdministrationUtilisateurs:create }
+    methods:  [GET]
+
+creation_utilisateur:
+    path: /administration/utilisateurs/ajouter.html
+    defaults: { _controller: StarkerxpUtilisateurBundle:AdministrationUtilisateurs:post }
+    methods:  [POST]
+
+formulaire_modification_utilisateur:
+    path: /administration/utilisateurs/modifier/{utilisateurId}.html
+    defaults: { _controller: StarkerxpUtilisateurBundle:AdministrationUtilisateurs:edit }
+    methods:  [GET]
+    requirements:
+        utilisateurId: "[a-z0-9]{8}\-[a-z0-9]{4}\-[a-z0-9]{4}\-[a-z0-9]{4}\-[a-z0-9]{12}"
+        
+modification_utilisateur:
+    path: /administration/utilisateurs/modifier/{utilisateurId}.html
+    defaults: { _controller: StarkerxpUtilisateurBundle:AdministrationUtilisateurs:put }
+    methods:  [PUT]
+    requirements:
+        utilisateurId: "[a-z0-9]{8}\-[a-z0-9]{4}\-[a-z0-9]{4}\-[a-z0-9]{4}\-[a-z0-9]{12}"
+        
+suppression_utilisateur:
+    path: /administration/utilisateurs/supprimer/{utilisateurId}.html
+    defaults: { _controller: StarkerxpUtilisateurBundle:AdministrationUtilisateurs:delete }
+    methods:  [DELETE]
+    requirements:
+        utilisateurId: "[a-z0-9]{8}\-[a-z0-9]{4}\-[a-z0-9]{4}\-[a-z0-9]{4}\-[a-z0-9]{12}"

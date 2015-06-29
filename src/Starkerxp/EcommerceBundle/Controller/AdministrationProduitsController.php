@@ -1,6 +1,6 @@
 <?php
 
-namespace Starkerxp\EcommerceBundle\Controller\Administration;
+namespace Starkerxp\EcommerceBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -13,13 +13,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
-class ProduitsController extends Controller
+class AdministrationProduitsController extends Controller
 {
 
-    /**
-     * @Route("/administration/produits/", name="liste_produits")
-     * @Method({"GET"})
-     */
     public function indexAction()
     {
         $produitQuery = new ProduitListerQuery();
@@ -32,10 +28,6 @@ class ProduitsController extends Controller
         return $render;
     }
 
-    /**
-     * @Route("/administration/produits/ajouter.html", name="formulaire_creation_produit")
-     * @Method({"GET"})
-     */
     public function createAction()
     {
         $form = $this->createForm($this->get('form.ajouter.produit'), new CreerProduitCommand(), [
@@ -47,10 +39,6 @@ class ProduitsController extends Controller
         return $render;
     }
 
-    /**
-     * @Route("/administration/produits/ajouter.html", name="creation_produit")
-     * @Method({"POST"})
-     */
     public function postAction(Request $request)
     {
         $form = $this->createForm($this->get('form.ajouter.produit'), new CreerProduitCommand(), [
@@ -70,10 +58,6 @@ class ProduitsController extends Controller
         return $render;
     }
 
-    /**
-     * @Route("/administration/produits/modifier/{produitId}.html", name="formulaire_modification_produit", requirements ={"produitId" = "[a-z0-9]{8}\-[a-z0-9]{4}\-[a-z0-9]{4}\-[a-z0-9]{4}\-[a-z0-9]{12}"})
-     * @Method({"GET"})
-     */
     public function editAction($produitId)
     {
         $produitQuery = new ProduitQuery();
@@ -95,10 +79,6 @@ class ProduitsController extends Controller
         return $render;
     }
 
-    /**
-     * @Route("/administration/produits/modifier/{produitId}.html", name="modification_produit", requirements ={"produitId" = "[a-z0-9]{8}\-[a-z0-9]{4}\-[a-z0-9]{4}\-[a-z0-9]{4}\-[a-z0-9]{12}"})
-     * @Method({"PUT"})
-     */
     public function putAction(Request $request, $produitId)
     {
         $entite = new ModifierProduitCommand();
@@ -121,10 +101,6 @@ class ProduitsController extends Controller
         return $render;
     }
 
-    /**
-     * @Route("/administration/produits/supprimer/{produitId}.html", name="suppression_produit", requirements ={"produitId" = "[a-z0-9]{8}\-[a-z0-9]{4}\-[a-z0-9]{4}\-[a-z0-9]{4}\-[a-z0-9]{12}"})
-     * @Method({"DELETE"})
-     */
     public function deleteAction(Request $request, $produitId)
     {
         if (!$this->isCsrfTokenValid('', $request->get('_token'))) {

@@ -34,7 +34,14 @@
                                     </span>
                                 </a>
                                 <div class="navbar-description navbar-right hidden-xs header-2-row">
-                                    {% block header %}Mon header{% endblock %}
+                                    <ul class="nav navbar-nav footer-nav">
+                                        {%if is_granted('ROLE_ADMIN') %}<li><a href="{{ path('administration') }}">Administration</a></li>{% endif %}
+                                            {% if app.user %}
+                                            <li><a href="{{ path('deconnexion') }}">Me déconnecter</a></li>
+                                            {% else %}
+                                            <li><a href="{{ path('login') }}">Login</a></li>
+                                            {% endif %}
+                                    </ul>
                                 </div>
                             </div>
                         </div>
@@ -95,6 +102,6 @@
     %}
     <script type="text/javascript" src="{{ asset_url }}"></script>
     {% endjavascripts  %}
-    {% block javascripts %}{% endblock %}
+{% block javascripts %}{% endblock %}
 </body>
 </html>

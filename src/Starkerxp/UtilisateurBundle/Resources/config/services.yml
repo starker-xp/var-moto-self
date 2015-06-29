@@ -1,0 +1,14 @@
+services :
+    security.access.anonymous_voter.class:
+        class: "Starkerxp\\UtilisateurBundle\\Services\\Voters\\AnonymousVoter"
+        arguments: ["@security.authentication.trust_resolver"]
+        public:     false
+        tags:
+           - { name: security.voter }
+           
+    utilisateur.popo:
+        class: "Starkerxp\\UtilisateurBundle\\Services\\Domain\\Utilisateur\\UtilisateurPOPO"
+
+    repository.read.utilisateur:
+        class: "Starkerxp\\UtilisateurBundle\\Services\\Persistence\\Lecture\\UtilisateurRepository"
+        arguments: ["@doctrine.dbal.read_connection"]

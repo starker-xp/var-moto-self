@@ -1,9 +1,7 @@
 <?php
 
-namespace Starkerxp\EcommerceBundle\Controller\Administration;
+namespace Starkerxp\EcommerceBundle\Controller;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Starkerxp\EcommerceBundle\Forms\Marque\CreationMarqueForm;
 use Starkerxp\EcommerceBundle\Forms\Marque\ModificationMarqueForm;
 use Starkerxp\EcommerceBundle\Services\Command\Marque\CreationMarqueCommand;
@@ -15,13 +13,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
-class MarquesController extends Controller
+class AdministrationMarquesController extends Controller
 {
 
-    /**
-     * @Route("/administration/marques/", name="liste_marques")
-     * @Method({"GET"})
-     */
     public function indexAction()
     {
         $marqueQuery = new MarqueListerQuery();
@@ -33,10 +27,6 @@ class MarquesController extends Controller
         return $render;
     }
 
-    /**
-     * @Route("/administration/marques/ajouter.html", name="formulaire_creation_marque")
-     * @Method({"GET"})
-     */
     public function createAction()
     {
         $form = $this->createForm(new CreationMarqueForm(), new CreationMarqueCommand(), [
@@ -49,10 +39,6 @@ class MarquesController extends Controller
         return $render;
     }
 
-    /**
-     * @Route("/administration/marques/ajouter.html", name="creation_marque")
-     * @Method({"POST"})
-     */
     public function postAction(Request $request)
     {
         $form = $this->createForm(new CreationMarqueForm(), new CreationMarqueCommand(), [
@@ -71,10 +57,6 @@ class MarquesController extends Controller
         return $render;
     }
 
-    /**
-     * @Route("/administration/marques/modifier/{marqueId}.html", name="formulaire_modification_marque", requirements ={"marqueId" = "[a-z0-9]{8}\-[a-z0-9]{4}\-[a-z0-9]{4}\-[a-z0-9]{4}\-[a-z0-9]{12}"})
-     * @Method({"GET"})
-     */
     public function editAction($marqueId)
     {
         $marqueQuery = new MarqueQuery();
@@ -97,10 +79,6 @@ class MarquesController extends Controller
         return $render;
     }
 
-    /**
-     * @Route("/administration/marques/modifier/{marqueId}.html", name="modification_marque", requirements ={"marqueId" = "[a-z0-9]{8}\-[a-z0-9]{4}\-[a-z0-9]{4}\-[a-z0-9]{4}\-[a-z0-9]{12}"})
-     * @Method({"PUT"})
-     */
     public function putAction(Request $request, $marqueId)
     {
         $entite = new ModificationMarqueCommand();
@@ -123,10 +101,6 @@ class MarquesController extends Controller
         return $render;
     }
 
-    /**
-     * @Route("/administration/marques/supprimer/{marqueId}.html", name="suppression_marque", requirements ={"marqueId" = "[a-z0-9]{8}\-[a-z0-9]{4}\-[a-z0-9]{4}\-[a-z0-9]{4}\-[a-z0-9]{12}"})
-     * @Method({"DELETE"})
-     */
     public function deleteAction(Request $request, $marqueId)
     {
         if (!$this->isCsrfTokenValid('', $request->get('_token'))) {
