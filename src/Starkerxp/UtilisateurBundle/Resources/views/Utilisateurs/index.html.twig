@@ -1,0 +1,33 @@
+{% extends '::administration.html.twig' %}
+{% set token = csrf_token('') %}
+
+{% block h1 %}Gestion des utilisateurs{% endblock %}
+
+{% block body %}
+    <div class="entypo circled-plus color-primary" ><a class="small" href="{{ path('formulaire_creation_utilisateur') }}">Ajouter un utilisateur</a></div>
+    <ul>
+        {% for utilisateur in utilisateurs %}
+            <li>{{ utilisateur.nom }} <a href="{{ path('formulaire_modification_utilisateur', {'utilisateurId': utilisateur.id}) }}">Modifier</a> / <a class="delete" data-href="{{ path('suppression_utilisateur', {'utilisateurId': utilisateur.id}) }}" data-csrf="{{ token }}">Supprimer</a></li>
+        {% endfor %}
+    </ul>
+{% endblock %}
+
+{% block javascripts %}
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.delete').click(function (event) {
+                event.preventDefault();
+                $.ajax({
+                    url: $(this).data('href'),
+                    type: 'delete',
+                    data : {
+                        _token: $(this).data('csrf')
+                    },
+                    success : function(json){
+                        console.log(json);
+                    }
+                });
+            });
+        });
+    </script>
+{% endblock %}

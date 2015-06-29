@@ -16,7 +16,7 @@ class AuthentificationController extends Controller
         $error = $authenticationUtils->getLastAuthenticationError();
         // last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
-        $render = $this->render('StarkerxpUtilisateurBundle:Utilisateur:login.html.twig', array(
+        $render = $this->render('StarkerxpUtilisateurBundle:Utilisateurs:login.html.twig', array(
             // last username entered by the user
             'last_username' => $lastUsername,
             'error' => $error,

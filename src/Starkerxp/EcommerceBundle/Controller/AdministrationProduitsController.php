@@ -2,8 +2,6 @@
 
 namespace Starkerxp\EcommerceBundle\Controller;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Starkerxp\EcommerceBundle\Services\Command\Produit\CreerProduitCommand;
 use Starkerxp\EcommerceBundle\Services\Command\Produit\ModifierProduitCommand;
 use Starkerxp\EcommerceBundle\Services\Command\Produit\SupprimerProduitCommand;

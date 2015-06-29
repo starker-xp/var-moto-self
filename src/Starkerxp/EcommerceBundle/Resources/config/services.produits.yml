@@ -12,6 +12,7 @@ services :
         calls:
             - [register, ["@handler.query.lister_produit"]]
             - [register, ["@handler.query.get_produit"]]
+            
     # Repository
     repository.read.produit:
         class: "Starkerxp\\EcommerceBundle\\Services\\Persistence\\Lecture\\ProduitRepository"
@@ -25,14 +26,6 @@ services :
         class: "Starkerxp\\EcommerceBundle\\Services\\Persistence\\Ecriture\\Produit\\ProduitProjection"
         arguments: ["@doctrine.dbal.write_connection"]
         
-    # Command
-    handler.command.creation_produit:
-        class: "Starkerxp\\EcommerceBundle\\Services\\Command\\Produit\\CreerProduitHandler"
-        arguments: ["@repository.write.produit"]
-    handler.command.modification_produit:
-        class: "Starkerxp\\EcommerceBundle\\Services\\Command\\Produit\\ModifierProduitHandler"
-        arguments: ["@repository.write.produit"]
-        
     # Query
     handler.query.lister_produit:
         class: "Starkerxp\\EcommerceBundle\\Services\\Query\\Produit\\ProduitListerQueryHandler"
@@ -40,6 +33,15 @@ services :
     handler.query.get_produit:
         class: "Starkerxp\\EcommerceBundle\\Services\\Query\\Produit\\ProduitQueryHandler"
         arguments: ["@repository.read.produit"]
+        
+    # Command
+    handler.command.creation_produit:
+        class: "Starkerxp\\EcommerceBundle\\Services\\Command\\Produit\\CreerProduitHandler"
+        arguments: ["@repository.write.produit"]
+    handler.command.modification_produit:
+        class: "Starkerxp\\EcommerceBundle\\Services\\Command\\Produit\\ModifierProduitHandler"
+        arguments: ["@repository.write.produit"]
     handler.command.supprimer_produit:
         class: "Starkerxp\\EcommerceBundle\\Services\\Command\\Produit\\SupprimerProduitHandler"
         arguments: ["@repository.write.produit"]
+        

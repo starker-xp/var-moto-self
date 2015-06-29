@@ -1,0 +1,52 @@
+services :
+    # Bus
+    bus.command.utilisateur:
+        class: "Starkerxp\\CQRSESBundle\\Services\\Command\\CommandBus"
+        calls:
+            - [register, ["@handler.command.creation_utilisateur"]]
+            - [register, ["@handler.command.modification_utilisateur"]]
+            - [register, ["@handler.command.supprimer_utilisateur"]]
+            - [register, ["@handler.command.activer_utilisateur"]]
+            
+    bus.event.utilisateur:
+        class: "Starkerxp\\CQRSESBundle\\Services\\Query\\QueryBus"
+        calls:
+            - [register, ["@handler.query.lister_utilisateur"]]
+            - [register, ["@handler.query.get_utilisateur"]]
+            
+    # Repository
+    repository.read.utilisateur:
+        class: "Starkerxp\\UtilisateurBundle\\Services\\Persistence\\Lecture\\UtilisateurRepository"
+        arguments: ["@doctrine.dbal.read_connection"]
+    repository.write.utilisateur:
+        class: "Starkerxp\\UtilisateurBundle\\Services\\Persistence\\Ecriture\\Utilisateur\\UtilisateurRepository"
+        arguments: ["@event_store", "@projection.utilisateur"]
+        
+    # Projection
+    projection.utilisateur:
+        class: "Starkerxp\\UtilisateurBundle\\Services\\Persistence\\Ecriture\\Utilisateur\\UtilisateurProjection"
+        arguments: ["@doctrine.dbal.write_connection"]
+        
+    # Query
+    handler.query.lister_utilisateur:
+        class: "Starkerxp\\UtilisateurBundle\\Services\\Query\\Utilisateur\\UtilisateurListerQueryHandler"
+        arguments: ["@repository.read.utilisateur"]
+    handler.query.get_utilisateur:
+        class: "Starkerxp\\UtilisateurBundle\\Services\\Query\\Utilisateur\\UtilisateurQueryHandler"
+        arguments: ["@repository.read.utilisateur"]
+
+    # Command
+    handler.command.creation_utilisateur:
+        class: "Starkerxp\\UtilisateurBundle\\Services\\Command\\Utilisateur\\CreerUtilisateurHandler"
+        arguments: ["@repository.write.utilisateur"]
+    handler.command.modification_utilisateur:
+        class: "Starkerxp\\UtilisateurBundle\\Services\\Command\\Utilisateur\\ModifierUtilisateurHandler"
+        arguments: ["@repository.write.utilisateur"]
+    handler.command.supprimer_utilisateur:
+        class: "Starkerxp\\UtilisateurBundle\\Services\\Command\\Utilisateur\\SupprimerUtilisateurHandler"
+        arguments: ["@repository.write.utilisateur"]
+    handler.command.activer_utilisateur:
+        class: "Starkerxp\\UtilisateurBundle\\Services\\Command\\Utilisateur\\ActiverUtilisateurHandler"
+        arguments: ["@repository.write.utilisateur"]
+        
+    

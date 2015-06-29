@@ -21,6 +21,7 @@ class AdministrationMarquesController extends Controller
         $marqueQuery = new MarqueListerQuery();
         $queryBus = $this->get('bus.event.marque');
         $marques = $queryBus->handle($marqueQuery);
+
         $render = $this->render('StarkerxpEcommerceBundle:Marques:index.html.twig', [
             'marques' => $marques,
         ]);
