@@ -1,0 +1,54 @@
+<div id="header-wrapper">
+    <div id="header" class="no-border-top">
+        <div id="header-inner">
+            <nav class="navbar navbar-default">
+                <div class="container">
+                    <div class="navbar-header">
+                        <a class="navbar-brand" href="/">
+                            <span class="logo-styled">
+                                <span class="logo-title">
+                                    <img src="{{ asset('/img/logo-directory.png') }}" alt=""> VAR MOTOSELF
+                                </span>
+                                <span class="logo-subtitle hidden-sm">Spécialiste de la pièce<br>moto d'occasion pour Trail</span>
+                            </span>
+                        </a>
+                        <div class="navbar-description navbar-right hidden-xs header-2-row">
+                            <table class='center' style='width:100%;'>
+                                {% if app.request.attributes.get('_route') != 'homepage' %}
+                                    <tr>
+                                        <td colspan='2'>
+                                            <div class="header-moteur">
+                                                <form action="{{ path('recherche') }}" method="post">
+                                                    <div class="row">
+                                                        <div class="col-sm-6">
+                                                            <input type="text"  name="recherche" class="form-control"/>
+                                                        </div>
+                                                        <div class="col-sm-6">
+                                                            <input type="submit"  class="btn btn-secondary" value="Rechercher"/>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                {% endif %}
+                                <tr>
+                                    {%if is_granted('ROLE_ADMIN') %}<td><a href="{{ path('administration') }}">Administration</a></td>{% endif %}
+                                    <td>
+                                        {% if app.user %}
+                                            <a href="{{ path('deconnexion') }}">Me déconnecter</a>
+                                        {% else %}
+                                            <a href="{{ path('login') }}">Login</a>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </div>
+</div>
+

@@ -5,6 +5,13 @@ administration:
     path: /administration.html
     defaults: { _controller: StarkerxpEcommerceBundle:Administration:index }
     methods:  [GET]
+#################################
+# RecherchesController
+#################################
+recherche:
+    path: /recherche.html
+    defaults: { _controller: StarkerxpEcommerceBundle:Recherches:index }
+    methods:  [POST]
     
 #################################
 # DefaultController

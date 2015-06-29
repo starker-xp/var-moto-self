@@ -1,12 +1,12 @@
 {% extends '::homepage.html.twig' %}
 
 {% block body %}
-<form action="/recherche" method="post">
-    <div class="form-group">
-        <div style="text-align: center; width: 300px; margin:0 auto;">
-            <input type="text"  name="recherche" class="form-control"/><br/>
-            <input type="submit"  class="btn btn-secondary" value="Rechercher"/>
+    <form action="{{ path('recherche') }}" method="post">
+        <div class="form-group">
+            <div style="text-align: center; width: 300px; margin:0 auto;">
+                <input type="text"  name="recherche" class="form-control"/><br/>
+                <input type="submit"  class="btn btn-secondary" value="Rechercher"/>
+            </div>
         </div>
-    </div>
-</form>
+    </form>
 {% endblock %}
