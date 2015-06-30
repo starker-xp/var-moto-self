@@ -32,7 +32,7 @@ class CQRSESGenerator extends Generator
 
         foreach ($fichiers as $fichier) {
             $twigTemplate = "Services/" . $fichier . ".twig";
-            $twigTemplate = str_replace("Services/../", "", $target);
+            $twigTemplate = str_replace("Services/../", "", $twigTemplate);
 
             $target = $dir . str_replace(['_nomDomaine_', '_lnomDomaine_'], [$domain, lcfirst($domain)], $fichier);
             $target = str_replace("Services/../", "", $target);
