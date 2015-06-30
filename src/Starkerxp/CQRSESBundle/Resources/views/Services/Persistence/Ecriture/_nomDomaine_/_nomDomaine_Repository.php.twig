@@ -1,0 +1,17 @@
+<?php
+
+namespace {{namespace}}\Services\Persistence\Ecriture\{{nomDeDomaine}};
+
+use \{{namespace}}\Services\Domain\{{nomDeDomaine}}\{{nomDeDomaine}}Domain;
+use \Starkerxp\CQRSESBundle\Services\Persistence\AbstractEventStore;
+
+class {{nomDeDomaine}}Repository extends AbstractEventStore
+{
+
+    public function get($aggregateId)
+    {
+        $eventStream = $this->eventStore->getHistoriqueAggregat($aggregateId);
+        return {{nomDeDomaine}}Domain::reconstitutionDepuis($eventStream);
+    }
+
+}

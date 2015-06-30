@@ -1,0 +1,64 @@
+<?php
+
+namespace Starkerxp\EcommerceBundle\Services\Persistence\Ecriture\{{nomDeDomaine}};
+
+use Doctrine\DBAL\Connection;
+use Starkerxp\EcommerceBundle\Services\Domain\{{nomDeDomaine}}\Event\{{nomDeDomaine}}AEteCree;
+use Starkerxp\EcommerceBundle\Services\Domain\{{nomDeDomaine}}\Event\{{nomDeDomaine}}AEteModifie;
+use Starkerxp\EcommerceBundle\Services\Domain\{{nomDeDomaine}}\Event\{{nomDeDomaine}}AEteSupprime;
+
+class {{nomDeDomaine}}Projection
+{
+
+    private $pdo;
+
+    public function __construct(Connection $pdo)
+    {
+        $this->pdo = $pdo;
+    }
+
+    public function getPdo()
+    {
+        return $this->pdo;
+    }
+
+    public function project($events)
+    {
+        foreach ($events as $event) {
+            $className = get_class($event);
+            $arrayClass = explode("\\", $className);
+            $projectMetohd = 'project' . $arrayClass[count($arrayClass) - 1];
+            $this->$projectMetohd($event);
+        }
+    }
+
+    public function project{{nomDeDomaine}}AEteCree({{nomDeDomaine}}AEteCree $event)
+    {
+        $sql = 'INSERT INTO {{nomDeDomaineMinuscule}}s (id, libelle) VALUES (:{{nomDeDomaineMinuscule}}_id, :libelle)';
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([
+            ':{{nomDeDomaineMinuscule}}_id' => $event->getAggregateId(),
+            ':libelle' => $event->getLibelle(),
+        ]);
+    }
+
+    public function project{{nomDeDomaine}}AEteModifie(ModificationLibelle{{nomDeDomaine}} $event)
+    {
+        $sql = 'UPDATE {{nomDeDomaineMinuscule}}s SET libelle= :libelle WHERE id= :{{nomDeDomaineMinuscule}}_id';
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([
+            ':{{nomDeDomaineMinuscule}}_id' => $event->getAggregateId(),
+            ':libelle' => $event->getLibelle(),
+        ]);
+    }
+
+    public function project{{nomDeDomaine}}AEteSupprime(Une{{nomDeDomaine}}AEteSupprime $event)
+    {
+        $sql = 'DELETE FROM {{nomDeDomaineMinuscule}}s WHERE id= :{{nomDeDomaineMinuscule}}_id';
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([
+            ':{{nomDeDomaineMinuscule}}_id' => $event->getAggregateId()
+        ]);
+    }
+
+}
