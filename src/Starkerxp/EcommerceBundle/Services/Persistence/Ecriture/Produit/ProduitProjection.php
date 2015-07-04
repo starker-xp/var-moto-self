@@ -2,7 +2,7 @@
 
 namespace Starkerxp\EcommerceBundle\Services\Persistence\Ecriture\Produit;
 
-use Doctrine\DBAL\Connection;
+use Starkerxp\CQRSESBundle\Services\Persistence\AbstractProjection;
 use Starkerxp\EcommerceBundle\Services\Domain\Produit\Event\ProduitAEteCree;
 use Starkerxp\EcommerceBundle\Services\Domain\Produit\Event\UneModificationDeLaDescriptionProduit;
 use Starkerxp\EcommerceBundle\Services\Domain\Produit\Event\UneModificationDeLaMarqueProduit;
@@ -11,35 +11,13 @@ use Starkerxp\EcommerceBundle\Services\Domain\Produit\Event\UneModificationDuLib
 use Starkerxp\EcommerceBundle\Services\Domain\Produit\Event\UneModificationDuPrixProduit;
 use Starkerxp\EcommerceBundle\Services\Domain\Produit\Event\UnProduitAEteSupprime;
 
-class ProduitProjection
+class ProduitProjection extends AbstractProjection
 {
-
-    private $pdo;
-
-    public function __construct(Connection $pdo)
-    {
-        $this->pdo = $pdo;
-    }
-
-    public function getPdo()
-    {
-        return $this->pdo;
-    }
-
-    public function project($events)
-    {
-        foreach ($events as $event) {
-            $className = get_class($event);
-            $arrayClass = explode("\\", $className);
-            $projectMetohd = 'project' . $arrayClass[count($arrayClass) - 1];
-            $this->$projectMetohd($event);
-        }
-    }
 
     public function projectProduitAEteCree(ProduitAEteCree $event)
     {
         $sql = 'INSERT INTO produits (id, marque_id, libelle, description, prix, quantite) VALUES (:produit_id, :marque_id,  :libelle, :description, :prix, :quantite)';
-        $stmt = $this->pdo->prepare($sql);
+        $stmt = $this->getPdo()->prepare($sql);
         $stmt->execute([
             ':produit_id' => $event->getAggregateId(),
             ':marque_id' => $event->getMarqueId(),
@@ -53,7 +31,7 @@ class ProduitProjection
     public function projectUneModificationDeLaMarqueProduit(UneModificationDeLaMarqueProduit $event)
     {
         $sql = 'UPDATE produits SET marque_id= :marque_id WHERE id= :produit_id';
-        $stmt = $this->pdo->prepare($sql);
+        $stmt = $this->getPdo()->prepare($sql);
         $stmt->execute([
             ':produit_id' => $event->getAggregateId(),
             ':marque_id' => $event->getMarqueId(),
@@ -63,7 +41,7 @@ class ProduitProjection
     public function projectUneModificationDeLaDescriptionProduit(UneModificationDeLaDescriptionProduit $event)
     {
         $sql = 'UPDATE produits SET description= :description WHERE id= :produit_id';
-        $stmt = $this->pdo->prepare($sql);
+        $stmt = $this->getPdo()->prepare($sql);
         $stmt->execute([
             ':produit_id' => $event->getAggregateId(),
             ':description' => $event->getDescription(),
@@ -73,7 +51,7 @@ class ProduitProjection
     public function projectUneModificationDeLaQuantiteProduit(UneModificationDeLaQuantiteProduit $event)
     {
         $sql = 'UPDATE produits SET quantite= :quantite WHERE id= :produit_id';
-        $stmt = $this->pdo->prepare($sql);
+        $stmt = $this->getPdo()->prepare($sql);
         $stmt->execute([
             ':produit_id' => $event->getAggregateId(),
             ':quantite' => $event->getQuantite(),
@@ -83,7 +61,7 @@ class ProduitProjection
     public function projectUneModificationDuLibelleProduit(UneModificationDuLibelleProduit $event)
     {
         $sql = 'UPDATE produits SET libelle= :libelle WHERE id= :produit_id';
-        $stmt = $this->pdo->prepare($sql);
+        $stmt = $this->getPdo()->prepare($sql);
         $stmt->execute([
             ':produit_id' => $event->getAggregateId(),
             ':libelle' => $event->getLibelle(),
@@ -93,7 +71,7 @@ class ProduitProjection
     public function projectUneModificationDuPrixProduit(UneModificationDuPrixProduit $event)
     {
         $sql = 'UPDATE produits SET prix= :prix WHERE id= :produit_id';
-        $stmt = $this->pdo->prepare($sql);
+        $stmt = $this->getPdo()->prepare($sql);
         $stmt->execute([
             ':produit_id' => $event->getAggregateId(),
             ':prix' => $event->getPrix(),
@@ -103,7 +81,7 @@ class ProduitProjection
     public function projectUnProduitAEteSupprime(UnProduitAEteSupprime $event)
     {
         $sql = 'DELETE FROM produits WHERE id= :produit_id';
-        $stmt = $this->pdo->prepare($sql);
+        $stmt = $this->getPdo()->prepare($sql);
         $stmt->execute([
             ':produit_id' => $event->getAggregateId()
         ]);
