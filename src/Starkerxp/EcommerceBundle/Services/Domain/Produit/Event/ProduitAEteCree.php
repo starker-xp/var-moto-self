@@ -2,9 +2,9 @@
 
 namespace Starkerxp\EcommerceBundle\Services\Domain\Produit\Event;
 
-use \Starkerxp\CQRSESBundle\Services\Domain\EventInterface;
+use \Starkerxp\CQRSESBundle\Services\Domain\AbstractEvent;
 
-class ProduitAEteCree implements EventInterface
+class ProduitAEteCree extends AbstractEvent
 {
 
     private $produitId;

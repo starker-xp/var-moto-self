@@ -6,4 +6,6 @@ interface EventInterface
 {
 
     public function getAggregateId();
+
+    public function misAJourEvent();
 }

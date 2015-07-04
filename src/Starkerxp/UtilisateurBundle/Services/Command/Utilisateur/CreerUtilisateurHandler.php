@@ -33,7 +33,6 @@ class CreerUtilisateurHandler implements CommandHandlerInterface
         $uuid = Uuid::uuid4()->toString();
         $nouvelleUtilisateur = UtilisateurDomain::cree($uuid, $command->getRole(), $command->getEmail(), $command->getNom(), $command->getPrenom(), $command->getMotDePasse());
         $this->utilisateurRepository->ajouter($nouvelleUtilisateur);
-        // Déclenchement des listeners  pour le traitement post création;
     }
 
 }

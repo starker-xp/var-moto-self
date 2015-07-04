@@ -2,9 +2,9 @@
 
 namespace Starkerxp\EcommerceBundle\Services\Domain\Produit\Event;
 
-use \Starkerxp\CQRSESBundle\Services\Domain\EventInterface;
+use \Starkerxp\CQRSESBundle\Services\Domain\AbstractEvent;
 
-class UneModificationDeLaQuantiteProduit implements EventInterface
+class UneModificationDeLaQuantiteProduit extends AbstractEvent
 {
 
     private $produitId;

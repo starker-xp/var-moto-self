@@ -2,9 +2,9 @@
 
 namespace {{namespace}}\Services\Domain\{{nomDeDomaine}}\Event;
 
-use \Starkerxp\CQRSESBundle\Services\Domain\EventInterface;
+use \Starkerxp\CQRSESBundle\Services\Domain\AbstractEvent;
 
-class {{nomDeDomaine}}AEteSupprime implements EventInterface
+class {{nomDeDomaine}}AEteSupprime extends AbstractEvent
 {
 
     private ${{nomDeDomaineMinuscule}}Id;

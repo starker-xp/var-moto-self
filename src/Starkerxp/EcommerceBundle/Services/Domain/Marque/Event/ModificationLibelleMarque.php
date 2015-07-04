@@ -2,9 +2,9 @@
 
 namespace Starkerxp\EcommerceBundle\Services\Domain\Marque\Event;
 
-use \Starkerxp\CQRSESBundle\Services\Domain\EventInterface;
+use \Starkerxp\CQRSESBundle\Services\Domain\AbstractEvent;
 
-class ModificationLibelleMarque implements EventInterface
+class ModificationLibelleMarque extends AbstractEvent
 {
 
     private $marqueId;

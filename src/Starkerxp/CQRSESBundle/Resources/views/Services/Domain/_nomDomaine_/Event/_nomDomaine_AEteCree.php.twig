@@ -1,8 +1,8 @@
 namespace {{namespace}}\Services\Domain\{{nomDeDomaine}}\Event;
 
-use \Starkerxp\CQRSESBundle\Services\Domain\EventInterface;
+use \Starkerxp\CQRSESBundle\Services\Domain\AbstractEvent;
 
-class {{nomDeDomaine}}AEteCree implements EventInterface
+class {{nomDeDomaine}}AEteCree extends AbstractEvent
 {
     private ${{nomDeDomaineMinuscule}}Id;
     private $libelle;
