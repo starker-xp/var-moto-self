@@ -27,7 +27,7 @@ class Modification{{nomDeDomaine}}Handler implements CommandHandlerInterface
     public function handle(CommandInterface $command)
     {
         ${{nomDeDomaineMinuscule}} = $this->{{nomDeDomaineMinuscule}}Repository->get($command->get{{nomDeDomaine}}Id());
-        ${{nomDeDomaineMinuscule}}->modifierLibelle($command->getLibelle());
+        ${{nomDeDomaineMinuscule}}->modifierLeLibelle($command->getLibelle());
         $this->{{nomDeDomaineMinuscule}}Repository->ajouter(${{nomDeDomaineMinuscule}});
     }
 

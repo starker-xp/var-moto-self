@@ -76,7 +76,7 @@ class MarqueDomain extends DomainEvents
 
     }
 
-    public function modifierLibelle($nouveauLibelle)
+    public function modifierLeLibelle($nouveauLibelle)
     {
         $event = new ModificationLibelleMarque($this->marqueId, $nouveauLibelle);
         $event->setVersion($this->getUpdateVersion());
@@ -89,6 +89,13 @@ class MarqueDomain extends DomainEvents
         $event = new UneMarqueAEteSupprime($this->marqueId);
         $event->setVersion($this->getUpdateVersion());
         $this->enregistrementEvenement($event);
+    }
+
+    public function modifierLaMarque($command)
+    {
+        if ($this->libelle != ($libelle = $command->getLibelle())) {
+            $this->modifierLeLibelle($libelle);
+        }
     }
 
 }

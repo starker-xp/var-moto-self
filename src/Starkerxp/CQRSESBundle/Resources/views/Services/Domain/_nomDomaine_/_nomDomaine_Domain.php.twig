@@ -76,7 +76,7 @@ class {{nomDeDomaine}}Domain extends DomainEvents
 
     }
 
-    public function modifierLibelle($nouveauLibelle)
+    public function modifierLeLibelle($nouveauLibelle)
     {
         $event = new {{nomDeDomaine}}AEteModifie($this->{{nomDeDomaineMinuscule}}Id, $nouveauLibelle);
         $event->setVersion($this->getUpdateVersion());

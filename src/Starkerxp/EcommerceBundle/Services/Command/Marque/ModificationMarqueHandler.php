@@ -27,7 +27,7 @@ class ModificationMarqueHandler implements CommandHandlerInterface
     public function handle(CommandInterface $command)
     {
         $marque = $this->marqueRepository->get($command->getMarqueId());
-        $marque->modifierLibelle($command->getLibelle());
+        $marque->modifierLaMarque($command);
         $this->marqueRepository->ajouter($marque);
     }
 
