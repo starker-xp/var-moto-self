@@ -18,10 +18,14 @@ class UtilisateurDomain extends DomainEvents
     private $motDePasse;
     private $estActif;
 
-    private function __construct($utilisateurId, $libelle)
+    private function __construct($utilisateurId, $role, $email, $nom, $prenom, $motDePasse)
     {
         $this->utilisateurId = $utilisateurId;
-        $this->libelle = $libelle;
+        $this->role = $role;
+        $this->email = $email;
+        $this->nom = $nom;
+        $this->prenom = $prenom;
+        $this->motDePasse = $motDePasse;
     }
 
     public static function cree($utilisateurId, $role, $email, $nom, $prenom, $motDePasse)
@@ -50,7 +54,7 @@ class UtilisateurDomain extends DomainEvents
 
     private static function creeVide($utilisateurId)
     {
-        return new UtilisateurDomain($utilisateurId, '');
+        return new UtilisateurDomain($utilisateurId, null, null, null, null, null);
     }
 
     /**
@@ -76,7 +80,7 @@ class UtilisateurDomain extends DomainEvents
 
     public function applyUneUtilisateurAEteSupprime($event)
     {
-
+        
     }
 
     public function activerCompteUtilisateur()
