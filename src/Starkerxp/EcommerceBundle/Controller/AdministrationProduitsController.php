@@ -44,8 +44,16 @@ class AdministrationProduitsController extends Controller
         ]);
         $form->handleRequest($request);
         if ($form->isValid()) {
+            $commandForm = $form->getData();
+
+
+            $uploader = $this->get('uploader.produits');
+            $listeUrls = $uploader->upload();
+            $commandForm->setImages($listeUrls);
+
+
             $commandBus = $this->get('bus.command.produit');
-            $commandBus->handle($form->getData());
+            $commandBus->handle($commandForm);
             return $this->redirect($this->generateUrl('liste_produits'));
         }
 

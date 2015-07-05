@@ -1,4 +1,8 @@
 services :
+    uploader.produits:
+        class: "Starkerxp\\DocumentBundle\\Upload\\UploadService"
+        arguments: ["@service_container", "uploads/produits"]
+        
     # Bus
     bus.command.produit:
         class: "Starkerxp\\CQRSESBundle\\Services\\Command\\CommandBus"

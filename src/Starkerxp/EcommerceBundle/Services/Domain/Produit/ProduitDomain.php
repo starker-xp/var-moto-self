@@ -3,7 +3,7 @@
 namespace Starkerxp\EcommerceBundle\Services\Domain\Produit;
 
 use Starkerxp\CQRSESBundle\Services\Domain\DomainEvents;
-use Starkerxp\EcommerceBundle\Services\Domain\Produit\Event\ProduitAEteCree;
+use Starkerxp\EcommerceBundle\Services\Domain\Produit\Event\ProduitAEteCreeV2;
 use Starkerxp\EcommerceBundle\Services\Domain\Produit\Event\UneModificationDeLaDescriptionProduit;
 use Starkerxp\EcommerceBundle\Services\Domain\Produit\Event\UneModificationDeLaMarqueProduit;
 use Starkerxp\EcommerceBundle\Services\Domain\Produit\Event\UneModificationDeLaQuantiteProduit;
@@ -20,8 +20,9 @@ class ProduitDomain extends DomainEvents
     private $prix;
     private $quantite;
     private $marqueId;
+    private $images;
 
-    private function __construct($produitId, $marqueId, $libelle, $description, $prix, $quantite)
+    private function __construct($produitId, $marqueId, $libelle, $description, $prix, $quantite, $images)
     {
         $this->produitId = $produitId;
         $this->marqueId = $marqueId;
@@ -29,12 +30,13 @@ class ProduitDomain extends DomainEvents
         $this->description = $description;
         $this->prix = $prix;
         $this->quantite = $quantite;
+        $this->images = $images;
     }
 
-    public static function cree($produitId, $marqueId, $libelle, $description, $prix, $quantite)
+    public static function cree($produitId, $marqueId, $libelle, $description, $prix, $quantite, $images)
     {
-        $nouveauProduit = new ProduitDomain($produitId, $marqueId, $libelle, $description, $prix, $quantite);
-        $nouveauProduit->enregistrementEvenement(new ProduitAEteCree($produitId, $marqueId, $libelle, $description, $prix, $quantite));
+        $nouveauProduit = new ProduitDomain($produitId, $marqueId, $libelle, $description, $prix, $quantite, $images);
+        $nouveauProduit->enregistrementEvenement(new ProduitAEteCreeV2($produitId, $marqueId, $libelle, $description, $prix, $quantite, $images));
         return $nouveauProduit;
     }
 
@@ -57,7 +59,7 @@ class ProduitDomain extends DomainEvents
 
     private static function creeVide($produitId)
     {
-        return new ProduitDomain($produitId, '', '', '', '', '');
+        return new ProduitDomain($produitId, null, null, null, null, null, null);
     }
 
     /**
@@ -67,9 +69,10 @@ class ProduitDomain extends DomainEvents
      */
     private function apply($anEvent)
     {
-        $explodeEvent = explode("\\", get_class($anEvent));
+        $event = $anEvent->getEvent();
+        $explodeEvent = explode("\\", get_class($event));
         $method = 'apply' . $explodeEvent[count($explodeEvent) - 1];
-        $this->$method($anEvent);
+        $this->$method($event);
     }
 
     public function applyProduitAEteCree($event)
@@ -79,6 +82,12 @@ class ProduitDomain extends DomainEvents
         $this->description = $event->getDescription();
         $this->prix = $event->getPrix();
         $this->quantite = $event->getQuantite();
+    }
+
+    public function applyProduitAEteCreeV2($event)
+    {
+        $this->applyProduitAEteCree($event);
+        $this->images = $event->getImages();
     }
 
     public function modifierLeLibelle($libelle)

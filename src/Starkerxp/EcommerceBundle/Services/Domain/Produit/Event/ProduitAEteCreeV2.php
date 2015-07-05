@@ -2,10 +2,9 @@
 
 namespace Starkerxp\EcommerceBundle\Services\Domain\Produit\Event;
 
-use Starkerxp\CQRSESBundle\Services\Domain\AbstractEvent;
-use Starkerxp\EcommerceBundle\Services\Domain\Produit\Event\Adapter\ProduitAEteCreeV2Adapter;
+use \Starkerxp\CQRSESBundle\Services\Domain\AbstractEvent;
 
-class ProduitAEteCree extends AbstractEvent
+class ProduitAEteCreeV2 extends AbstractEvent
 {
 
     private $produitId;
@@ -14,8 +13,9 @@ class ProduitAEteCree extends AbstractEvent
     private $prix;
     private $quantite;
     private $marqueId;
+    private $images;
 
-    public function __construct($produitId, $marqueId, $libelle, $description, $prix, $quantite)
+    public function __construct($produitId, $marqueId, $libelle, $description, $prix, $quantite, $images)
     {
         $this->produitId = $produitId;
         $this->marqueId = $marqueId;
@@ -23,6 +23,7 @@ class ProduitAEteCree extends AbstractEvent
         $this->description = $description;
         $this->prix = $prix;
         $this->quantite = $quantite;
+        $this->images = $images;
     }
 
     public function getAggregateId()
@@ -55,16 +56,9 @@ class ProduitAEteCree extends AbstractEvent
         return $this->marqueId;
     }
 
-    /**
-     * Permet de mettre à jour mon event vers sa nouvelle version.
-     *
-     * @return ProduitAEteCreeV2
-     */
-    public function getEvent()
+    public function getImages()
     {
-        $adapter = new ProduitAEteCreeV2Adapter();
-        $event = $adapter->run($this);
-        return $event;
+        return $this->images;
     }
 
 }

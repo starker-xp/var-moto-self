@@ -2,6 +2,7 @@
 
 namespace Starkerxp\EcommerceBundle\Forms\Produit;
 
+use Starkerxp\DocumentBundle\Forms\Type\FilesType;
 use Starkerxp\EcommerceBundle\Services\Adaptateur\Marque\CollectionVersChoixSelectElement;
 use Starkerxp\EcommerceBundle\Services\Persistence\Lecture\MarqueRepository;
 use Symfony\Component\Form\AbstractType;
@@ -38,6 +39,7 @@ class ModificationProduitForm extends AbstractType
                 ->add('prix', 'text', ['label' => "Modifier le prix : ", 'constraints' => [new NotBlank()]])
                 ->add('description', 'textarea', ['label' => "Modifier la description de votre produit : ", 'constraints' => [new NotBlank()]])
                 ->add('quantite', 'text', ['label' => "Modifier la quantité disponible : ", 'constraints' => [new NotBlank()]])
+                ->add('images', new FilesType(), ["label" => "Photos"])
                 ->add('save', 'submit', ['label' => "Modifier"]);
     }
 

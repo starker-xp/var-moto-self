@@ -2,6 +2,7 @@
 
 namespace Starkerxp\EcommerceBundle\Forms\Produit;
 
+use Starkerxp\DocumentBundle\Forms\Type\FilesType;
 use Starkerxp\EcommerceBundle\Services\Adaptateur\Marque\CollectionVersChoixSelectElement;
 use Starkerxp\EcommerceBundle\Services\Persistence\Lecture\MarqueRepository;
 use Symfony\Component\Form\AbstractType;
@@ -38,6 +39,7 @@ class CreationProduitForm extends AbstractType
                 ->add('prix', 'text', ['label' => "Choisissez un prix : ", 'constraints' => [new NotBlank()]])
                 ->add('description', 'textarea', ['label' => "Description de votre produit : ", 'constraints' => [new NotBlank()]])
                 ->add('quantite', 'text', ['label' => "Stock disponible : ", 'constraints' => [new NotBlank()]])
+                ->add('images', new FilesType(), ["label" => "Photos"])
                 ->add('save', 'submit', ['label' => "Créer"]);
     }
 

@@ -4,6 +4,7 @@ namespace Starkerxp\EcommerceBundle\Services\Persistence\Ecriture\Produit;
 
 use Starkerxp\CQRSESBundle\Services\Persistence\AbstractProjection;
 use Starkerxp\EcommerceBundle\Services\Domain\Produit\Event\ProduitAEteCree;
+use Starkerxp\EcommerceBundle\Services\Domain\Produit\Event\ProduitAEteCreeV2;
 use Starkerxp\EcommerceBundle\Services\Domain\Produit\Event\UneModificationDeLaDescriptionProduit;
 use Starkerxp\EcommerceBundle\Services\Domain\Produit\Event\UneModificationDeLaMarqueProduit;
 use Starkerxp\EcommerceBundle\Services\Domain\Produit\Event\UneModificationDeLaQuantiteProduit;
@@ -26,6 +27,33 @@ class ProduitProjection extends AbstractProjection
             ':prix' => $event->getPrix(),
             ':quantite' => $event->getQuantite(),
         ]);
+    }
+
+    public function projectProduitAEteCreeV2(ProduitAEteCreeV2 $event)
+    {
+        $sql = 'INSERT INTO produits (id, marque_id, libelle, description, prix, quantite) VALUES (:produit_id, :marque_id,  :libelle, :description, :prix, :quantite)';
+        $stmt = $this->getPdo()->prepare($sql);
+        $stmt->execute([
+            ':produit_id' => $event->getAggregateId(),
+            ':marque_id' => $event->getMarqueId(),
+            ':libelle' => $event->getLibelle(),
+            ':description' => $event->getDescription(),
+            ':prix' => $event->getPrix(),
+            ':quantite' => $event->getQuantite(),
+        ]);
+
+        $images = $event->getImages();
+        if (empty($images)) {
+            return;
+        }
+        $sqlImages = 'INSERT INTO produits_images (produit_id, url) VALUES (:produit_id, :url)';
+        $stmtImages = $this->getPdo()->prepare($sqlImages);
+        foreach ($images as $image) {
+            $stmtImages->execute([
+                ':produit_id' => $event->getAggregateId(),
+                ':url' => $image,
+            ]);
+        }
     }
 
     public function projectUneModificationDeLaMarqueProduit(UneModificationDeLaMarqueProduit $event)

@@ -7,5 +7,5 @@ interface EventInterface
 
     public function getAggregateId();
 
-    public function misAJourEvent();
+    public function getEvent();
 }

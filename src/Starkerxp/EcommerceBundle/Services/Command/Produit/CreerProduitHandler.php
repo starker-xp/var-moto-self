@@ -24,7 +24,7 @@ class CreerProduitHandler implements CommandHandlerInterface
     public function handle(CommandInterface $command)
     {
         $uuid = Uuid::uuid4()->toString();
-        $nouvelleProduit = ProduitDomain::cree($uuid, $command->getMarqueId(), $command->getLibelle(), $command->getDescription(), $command->getPrix(), $command->getQuantite());
+        $nouvelleProduit = ProduitDomain::cree($uuid, $command->getMarqueId(), $command->getLibelle(), $command->getDescription(), $command->getPrix(), $command->getQuantite(), $command->getImages());
         $this->produitRepository->ajouter($nouvelleProduit);
         // Déclenchement des listeners  pour le traitement post création;
     }
