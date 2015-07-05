@@ -93,6 +93,7 @@ class ProduitDomain extends DomainEvents
     public function modifierLeLibelle($libelle)
     {
         $event = new UneModificationDuLibelleProduit($this->produitId, $libelle);
+        $event->setVersion($this->getUpdateVersion());
         $this->enregistrementEvenement($event);
         $this->apply($event);
     }
@@ -105,6 +106,7 @@ class ProduitDomain extends DomainEvents
     public function modifierLaDescription($description)
     {
         $event = new UneModificationDeLaDescriptionProduit($this->produitId, $description);
+        $event->setVersion($this->getUpdateVersion());
         $this->enregistrementEvenement($event);
         $this->apply($event);
     }
@@ -117,6 +119,7 @@ class ProduitDomain extends DomainEvents
     public function modifierLePrix($prix)
     {
         $event = new UneModificationDuPrixProduit($this->produitId, $prix);
+        $event->setVersion($this->getUpdateVersion());
         $this->enregistrementEvenement($event);
         $this->apply($event);
     }
@@ -129,6 +132,7 @@ class ProduitDomain extends DomainEvents
     public function modifierLaQuantite($quantite)
     {
         $event = new UneModificationDeLaQuantiteProduit($this->produitId, $quantite);
+        $event->setVersion($this->getUpdateVersion());
         $this->enregistrementEvenement($event);
         $this->apply($event);
     }
@@ -141,6 +145,7 @@ class ProduitDomain extends DomainEvents
     public function modifierLaMarque($marqueId)
     {
         $event = new UneModificationDeLaMarqueProduit($this->produitId, $marqueId);
+        $event->setVersion($this->getUpdateVersion());
         $this->enregistrementEvenement($event);
         $this->apply($event);
     }
@@ -180,6 +185,7 @@ class ProduitDomain extends DomainEvents
     public function supprimerUnProduit()
     {
         $event = new UnProduitAEteSupprime($this->produitId);
+        $event->setVersion($this->getUpdateVersion());
         $this->enregistrementEvenement($event);
     }
 

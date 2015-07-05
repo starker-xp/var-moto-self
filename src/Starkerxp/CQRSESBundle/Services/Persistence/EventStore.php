@@ -23,15 +23,16 @@ class EventStore
     public function commit($events)
     {
         $stmt = $this->pdo->prepare(
-                'INSERT INTO events (aggregate_id, `type`, created_at, `data`)
-             VALUES (:aggregate_id, :type, :created_at, :data)'
+                'INSERT INTO events (aggregate_id, `type`, created_at, `data`, `version`)
+             VALUES (:aggregate_id, :type, :created_at, :data, :version)'
         );
         foreach ($events as $event) {
             $stmt->execute([
                 ':aggregate_id' => (string) $event->getAggregateId(),
                 ':type' => get_class($event),
                 ':created_at' => date('Y-m-d H:i:s'),
-                ':data' => base64_encode(serialize($event))
+                ':data' => base64_encode(serialize($event)),
+                ':version' => $event->getVersion(),
             ]);
         }
     }

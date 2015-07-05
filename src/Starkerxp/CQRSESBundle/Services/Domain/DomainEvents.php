@@ -2,9 +2,10 @@
 
 namespace Starkerxp\CQRSESBundle\Services\Domain;
 
-class DomainEvents
+abstract class DomainEvents
 {
 
+    protected $version = 1;
     private $recordedEvents = [];
 
     /**
@@ -33,6 +34,23 @@ class DomainEvents
     public function enregistrementEvenement(EventInterface $domainEvents)
     {
         $this->recordedEvents[] = $domainEvents;
+    }
+
+    public function getVersion()
+    {
+        return $this->version;
+    }
+
+    public function setVersion($version)
+    {
+        $this->version = $version;
+        return $this;
+    }
+
+    public function getUpdateVersion()
+    {
+        $this->version++;
+        return $this->version;
     }
 
 }

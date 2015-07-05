@@ -80,12 +80,13 @@ class UtilisateurDomain extends DomainEvents
 
     public function applyUneUtilisateurAEteSupprime($event)
     {
-        
+
     }
 
     public function activerCompteUtilisateur()
     {
         $event = new UtilisateurAEteActive($this->utilisateurId, 1);
+        $event->setVersion($this->getUpdateVersion());
         $this->enregistrementEvenement($event);
         $this->apply($event);
     }
@@ -111,6 +112,7 @@ class UtilisateurDomain extends DomainEvents
     public function modifierLeNom($nom)
     {
         $event = new UneModificationDuNom($this->utilisateurId, $nom);
+        $event->setVersion($this->getUpdateVersion());
         $this->enregistrementEvenement($event);
         $this->apply($event);
     }
@@ -118,6 +120,7 @@ class UtilisateurDomain extends DomainEvents
     public function modifierLePrenom($prenom)
     {
         $event = new UneModificationDuPrenom($this->utilisateurId, $prenom);
+        $event->setVersion($this->getUpdateVersion());
         $this->enregistrementEvenement($event);
         $this->apply($event);
     }
@@ -125,6 +128,7 @@ class UtilisateurDomain extends DomainEvents
     public function modifierLEmail($email)
     {
         $event = new UneModificationDeLEmail($this->utilisateurId, $email);
+        $event->setVersion($this->getUpdateVersion());
         $this->enregistrementEvenement($event);
         $this->apply($event);
     }
@@ -132,6 +136,7 @@ class UtilisateurDomain extends DomainEvents
     public function supprimerUneUtilisateur()
     {
         $event = new UneUtilisateurAEteSupprime($this->utilisateurId);
+        $event->setVersion($this->getUpdateVersion());
         $this->enregistrementEvenement($event);
     }
 

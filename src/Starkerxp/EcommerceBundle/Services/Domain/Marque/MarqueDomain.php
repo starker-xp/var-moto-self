@@ -39,13 +39,14 @@ class MarqueDomain extends DomainEvents
         $events = $aggregateHistorique->getEvents();
         foreach ($events as $event) {
             $marque->apply($event);
+            $marque->setVersion($event->getVersion());
         }
         return $marque;
     }
 
     private static function creeVide($marqueId)
     {
-        return new MarqueDomain($marqueId, '');
+        return new MarqueDomain($marqueId, null);
     }
 
     /**
@@ -78,6 +79,7 @@ class MarqueDomain extends DomainEvents
     public function modifierLibelle($nouveauLibelle)
     {
         $event = new ModificationLibelleMarque($this->marqueId, $nouveauLibelle);
+        $event->setVersion($this->getUpdateVersion());
         $this->enregistrementEvenement($event);
         $this->apply($event);
     }
@@ -85,6 +87,7 @@ class MarqueDomain extends DomainEvents
     public function supprimerUneMarque()
     {
         $event = new UneMarqueAEteSupprime($this->marqueId);
+        $event->setVersion($this->getUpdateVersion());
         $this->enregistrementEvenement($event);
     }
 

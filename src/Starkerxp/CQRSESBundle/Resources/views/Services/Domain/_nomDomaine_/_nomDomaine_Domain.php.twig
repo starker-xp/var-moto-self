@@ -39,13 +39,14 @@ class {{nomDeDomaine}}Domain extends DomainEvents
         $events = $aggregateHistorique->getEvents();
         foreach ($events as $event) {
             ${{nomDeDomaineMinuscule}}->apply($event);
+            ${{nomDeDomaineMinuscule}}->setVersion($event->getVersion());
         }
         return ${{nomDeDomaineMinuscule}};
     }
 
     private static function creeVide(${{nomDeDomaineMinuscule}}Id)
     {
-        return new {{nomDeDomaine}}Domain(${{nomDeDomaineMinuscule}}Id, '');
+        return new {{nomDeDomaine}}Domain(${{nomDeDomaineMinuscule}}Id, null);
     }
 
     /**
@@ -78,6 +79,7 @@ class {{nomDeDomaine}}Domain extends DomainEvents
     public function modifierLibelle($nouveauLibelle)
     {
         $event = new {{nomDeDomaine}}AEteModifie($this->{{nomDeDomaineMinuscule}}Id, $nouveauLibelle);
+        $event->setVersion($this->getUpdateVersion());
         $this->enregistrementEvenement($event);
         $this->apply($event);
     }
@@ -85,6 +87,7 @@ class {{nomDeDomaine}}Domain extends DomainEvents
     public function supprimerUne{{nomDeDomaine}}()
     {
         $event = new {{nomDeDomaine}}AEteSupprime($this->{{nomDeDomaineMinuscule}}Id);
+        $event->setVersion($this->getUpdateVersion());
         $this->enregistrementEvenement($event);
     }
 
