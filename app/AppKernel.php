@@ -20,6 +20,7 @@ class AppKernel extends Kernel
             new Starkerxp\CQRSESBundle\StarkerxpCQRSESBundle(),
             new Starkerxp\EcommerceBundle\StarkerxpEcommerceBundle(),
             new Starkerxp\UtilisateurBundle\StarkerxpUtilisateurBundle(),
+            new Starkerxp\DocumentBundle\StarkerxpDocumentBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
