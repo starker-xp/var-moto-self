@@ -26,6 +26,9 @@ abstract class AbstractEventStore
     public function ajouter($aggregate)
     {
         $events = $aggregate->getEvenementsEnregistres();
+        if (empty($events)) {
+            return;
+        }
         // On enregistre l'event dans l'event_store.
         $this->eventStore->commit($events);
         // On génère la projection dans la base de données.
