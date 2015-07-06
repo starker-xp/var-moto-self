@@ -10,8 +10,9 @@ class ProduitRepository extends AbstractEventStore
 
     public function get($aggregateId)
     {
-        $eventStream = $this->eventStore->getHistoriqueAggregat($aggregateId);
-        return ProduitDomain::reconstitutionDepuis($eventStream);
+        $snapshot = $this->eventStore->getSnapshotAggregat($aggregateId);
+        $eventStream = $this->eventStore->getHistoriqueAggregat($aggregateId, ($snapshot ? $snapshot->getVersion() : null));
+        return ProduitDomain::reconstitutionDepuis($this->eventStore, $eventStream, $snapshot);
     }
 
 }

@@ -24,8 +24,8 @@ abstract class AbstractProjection
         foreach ($events as $event) {
             $className = get_class($event);
             $arrayClass = explode("\\", $className);
-            $projectMetohd = 'project' . $arrayClass[count($arrayClass) - 1];
-            $this->$projectMetohd($event);
+            $projectMethod = 'project' . $arrayClass[count($arrayClass) - 1];
+            $this->$projectMethod($event);
         }
     }
 

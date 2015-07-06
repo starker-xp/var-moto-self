@@ -2,11 +2,6 @@
 
 namespace Starkerxp\CQRSESBundle\Services\Persistence;
 
-use ArrayAccess;
-use Countable;
-use Iterator;
-use SplFixedArray;
-
 class AggregateHistorique
 {
 

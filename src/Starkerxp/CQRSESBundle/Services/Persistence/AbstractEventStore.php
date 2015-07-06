@@ -29,9 +29,7 @@ abstract class AbstractEventStore
         if (empty($events)) {
             return;
         }
-        // On enregistre l'event dans l'event_store.
-        $this->eventStore->commit($events);
-        // On génère la projection dans la base de données.
+        $this->eventStore->commit($events, $aggregate);
         $this->projection->project($events);
         $aggregate->suppressionEvenementsEnregistres();
     }

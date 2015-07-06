@@ -33,6 +33,11 @@ class ProduitDomain extends DomainEvents
         $this->images = $images;
     }
 
+    public function getAggregateId()
+    {
+        return $this->produitId;
+    }
+
     public static function cree($produitId, $marqueId, $libelle, $description, $prix, $quantite, $images)
     {
         $nouveauProduit = new ProduitDomain($produitId, $marqueId, $libelle, $description, $prix, $quantite, $images);
@@ -40,39 +45,9 @@ class ProduitDomain extends DomainEvents
         return $nouveauProduit;
     }
 
-    /**
-     * Permet de reconstruire un objet depuis sa collection d'évènements.
-     *
-     * @param type $aggregateHistorique
-     *
-     * @return type
-     */
-    public static function reconstitutionDepuis($aggregateHistorique)
-    {
-        $produit = static::creeVide($aggregateHistorique->getAggregateId());
-        $events = $aggregateHistorique->getEvents();
-        foreach ($events as $event) {
-            $produit->apply($event);
-        }
-        return $produit;
-    }
-
-    private static function creeVide($produitId)
+    public static function creeVide($produitId)
     {
         return new ProduitDomain($produitId, null, null, null, null, null, null);
-    }
-
-    /**
-     * Permet d'appliquer un event à l'objet en cours.
-     *
-     * @param type $anEvent
-     */
-    private function apply($anEvent)
-    {
-        $event = $anEvent->getEvent();
-        $explodeEvent = explode("\\", get_class($event));
-        $method = 'apply' . $explodeEvent[count($explodeEvent) - 1];
-        $this->$method($event);
     }
 
     public function applyProduitAEteCree($event)

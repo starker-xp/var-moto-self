@@ -19,6 +19,11 @@ class MarqueDomain extends DomainEvents
         $this->libelle = $libelle;
     }
 
+    public function getAggregateId()
+    {
+        return $this->marqueId;
+    }
+
     public static function cree($marqueId, $libelle)
     {
         $nouvelleMarque = new MarqueDomain($marqueId, $libelle);
@@ -26,39 +31,9 @@ class MarqueDomain extends DomainEvents
         return $nouvelleMarque;
     }
 
-    /**
-     * Permet de reconstruire un objet depuis sa collection d'évènements.
-     *
-     * @param type $aggregateHistorique
-     *
-     * @return type
-     */
-    public static function reconstitutionDepuis($aggregateHistorique)
-    {
-        $marque = static::creeVide($aggregateHistorique->getAggregateId());
-        $events = $aggregateHistorique->getEvents();
-        foreach ($events as $event) {
-            $marque->apply($event);
-            $marque->setVersion($event->getVersion());
-        }
-        return $marque;
-    }
-
-    private static function creeVide($marqueId)
+    public static function creeVide($marqueId)
     {
         return new MarqueDomain($marqueId, null);
-    }
-
-    /**
-     * Permet d'appliquer un event à l'objet en cours.
-     *
-     * @param type $anEvent
-     */
-    private function apply($anEvent)
-    {
-        $explodeEvent = explode("\\", get_class($anEvent));
-        $method = 'apply' . $explodeEvent[count($explodeEvent) - 1];
-        $this->$method($anEvent);
     }
 
     public function applyMarqueAEteCree($event)

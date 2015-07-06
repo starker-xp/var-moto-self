@@ -10,8 +10,9 @@ class UtilisateurRepository extends AbstractEventStore
 
     public function get($aggregateId)
     {
-        $eventStream = $this->eventStore->getHistoriqueAggregat($aggregateId);
-        return UtilisateurDomain::reconstitutionDepuis($eventStream);
+        $snapshot = $this->eventStore->getSnapshotAggregat($aggregateId);
+        $eventStream = $this->eventStore->getHistoriqueAggregat($aggregateId, ($snapshot ? $snapshot->getVersion() : null));
+        return UtilisateurDomain::reconstitutionDepuis($this->eventStore, $eventStream, $snapshot);
     }
 
 }

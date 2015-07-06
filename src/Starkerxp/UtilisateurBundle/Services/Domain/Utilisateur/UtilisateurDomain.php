@@ -28,6 +28,11 @@ class UtilisateurDomain extends DomainEvents
         $this->motDePasse = $motDePasse;
     }
 
+    public function getAggregateId()
+    {
+        return $this->utilisateurId;
+    }
+
     public static function cree($utilisateurId, $role, $email, $nom, $prenom, $motDePasse)
     {
         $nouvelleUtilisateur = new UtilisateurDomain($utilisateurId, $role, $email, $nom, $prenom, $motDePasse);
@@ -35,38 +40,9 @@ class UtilisateurDomain extends DomainEvents
         return $nouvelleUtilisateur;
     }
 
-    /**
-     * Permet de reconstruire un objet depuis sa collection d'évènements.
-     *
-     * @param type $aggregateHistorique
-     *
-     * @return type
-     */
-    public static function reconstitutionDepuis($aggregateHistorique)
-    {
-        $utilisateur = static::creeVide($aggregateHistorique->getAggregateId());
-        $events = $aggregateHistorique->getEvents();
-        foreach ($events as $event) {
-            $utilisateur->apply($event);
-        }
-        return $utilisateur;
-    }
-
-    private static function creeVide($utilisateurId)
+    public static function creeVide($utilisateurId)
     {
         return new UtilisateurDomain($utilisateurId, null, null, null, null, null);
-    }
-
-    /**
-     * Permet d'appliquer un event à l'objet en cours.
-     *
-     * @param type $anEvent
-     */
-    private function apply($anEvent)
-    {
-        $explodeEvent = explode("\\", get_class($anEvent));
-        $method = 'apply' . $explodeEvent[count($explodeEvent) - 1];
-        $this->$method($anEvent);
     }
 
     public function applyUtilisateurAEteCree($event)

@@ -10,8 +10,9 @@ class MarqueRepository extends AbstractEventStore
 
     public function get($aggregateId)
     {
-        $eventStream = $this->eventStore->getHistoriqueAggregat($aggregateId);
-        return MarqueDomain::reconstitutionDepuis($eventStream);
+        $snapshot = $this->eventStore->getSnapshotAggregat($aggregateId);
+        $eventStream = $this->eventStore->getHistoriqueAggregat($aggregateId, ($snapshot ? $snapshot->getVersion() : null));
+        return MarqueDomain::reconstitutionDepuis($this->eventStore, $eventStream, $snapshot);
     }
 
 }
