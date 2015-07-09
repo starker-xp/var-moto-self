@@ -37,7 +37,6 @@ php app/console starkerxp:cqrs:generer:structure <bundle> <domain>
 Todo 
 =====
 - Listener pour l'authenficiation
-- Système de snapshots
 - Amélioration du système de la console
 - Test unitaires
 - Test fonctionnelles
