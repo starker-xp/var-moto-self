@@ -23,4 +23,12 @@ abstract class AbstractEvent implements EventInterface
         return $this;
     }
 
+    public function setVersionSiNull($version)
+    {
+        if (empty($this->version)) {
+            $this->version = $version;
+        }
+        return $this;
+    }
+
 }

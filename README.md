@@ -37,10 +37,15 @@ php app/console starkerxp:cqrs:generer:structure <bundle> <domain>
 Todo 
 =====
 - Listener pour l'authenficiation
+- ~~Système de snapshots~~
 - Amélioration du système de la console
 - Test unitaires
 - Test fonctionnelles
 - Intégration du design
 - Création du système de panier +  paypal
 - Connexion via réseau sociaux
-
+- Amélioration du bundle Utilisateur
+- Création du bundle VarMotoSelf (Application) + Refactorisation du bundle ecommerce
+- Dans l'administration utilisateur enlever le champ confirmation du mot de passe
+- Créer un validateur custom pour les mots de passe
+- Créer un validateur custom afin qu'il y ait au moins un administrateur actif

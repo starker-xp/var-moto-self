@@ -1,6 +1,7 @@
 {% extends '::administration.html.twig' %}
 
-{% block h1 %}Gestion des utilisateurs > Ajouter{% endblock %}
+
+{% block h1 %}Gestion des utilisateurs > Modifier {{ utilisateur.nom  }}{% endblock %}
 
 {% block body %}
     {{ form(form) }}

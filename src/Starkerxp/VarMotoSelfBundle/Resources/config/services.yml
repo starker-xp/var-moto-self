@@ -1,0 +1,4 @@
+services:
+#    starkerxp_var_moto_self.example:
+#        class: Starkerxp\VarMotoSelfBundle\Example
+#        arguments: [@service_id, "plain_value", %parameter%]

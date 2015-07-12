@@ -1,0 +1,30 @@
+#################################
+# AdministrationController
+#################################
+administration:
+    path: /administration.html
+    defaults: { _controller: StarkerxpVarMotoSelfBundle:Administration:index }
+    methods:  [GET]
+
+#################################
+# DefaultController
+#################################
+homepage:
+    path: /
+    defaults: { _controller: StarkerxpVarMotoSelfBundle:Default:index }
+    methods:  [GET]
+
+faq:
+    path: /faq.html
+    defaults: { _controller: StarkerxpVarMotoSelfBundle:Default:faq }
+    methods:  [GET]
+
+mentions_legales:
+    defaults: { _controller: StarkerxpVarMotoSelfBundle:Default:mentionsLegales }
+    path: /mentions-legales.html
+    methods:  [GET]
+
+contact:
+    defaults: { _controller: StarkerxpVarMotoSelfBundle:Default:contact }
+    path: /contact.html
+    methods:  [GET]

@@ -49,4 +49,8 @@ services :
         class: "Starkerxp\\UtilisateurBundle\\Services\\Command\\Utilisateur\\ActiverUtilisateurHandler"
         arguments: ["@repository.write.utilisateur"]
         
-    
+    # Form
+    form.ajouter.utilisateur:
+        class: "Starkerxp\\UtilisateurBundle\\Forms\\Utilisateur\\CreerUtilisateurForm"
+    form.modifier.utilisateur:
+        class: "Starkerxp\\UtilisateurBundle\\Forms\\Utilisateur\\ModifierUtilisateurForm"

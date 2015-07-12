@@ -12,7 +12,6 @@ class CreerUtilisateurCommand implements CommandInterface
     private $nom;
     private $prenom;
     private $motDePasse;
-    private $confirmationMotDePasse;
 
     public function getRole()
     {
@@ -37,11 +36,6 @@ class CreerUtilisateurCommand implements CommandInterface
     public function getMotDePasse()
     {
         return $this->motDePasse;
-    }
-
-    public function getConfirmationMotDePasse()
-    {
-        return $this->confirmationMotDePasse;
     }
 
     public function setRole($role)
@@ -71,12 +65,6 @@ class CreerUtilisateurCommand implements CommandInterface
     public function setMotDePasse($motDePasse)
     {
         $this->motDePasse = $motDePasse;
-        return $this;
-    }
-
-    public function setConfirmationMotDePasse($confirmationMotDePasse)
-    {
-        $this->confirmationMotDePasse = $confirmationMotDePasse;
         return $this;
     }
 

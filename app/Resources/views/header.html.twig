@@ -16,7 +16,7 @@
                             <table class='center' style='width:100%;'>
                                 {% if app.request.attributes.get('_route') != 'homepage' %}
                                     <tr>
-                                        <td colspan='2'>
+                                        <td colspan='{% if app.user %}3{% else %}2{% endif %}'>
                                             <div class="header-moteur">
                                                 <form action="{{ path('recherche') }}" method="post">
                                                     <div class="row">
@@ -34,13 +34,12 @@
                                 {% endif %}
                                 <tr>
                                     {%if is_granted('ROLE_ADMIN') %}<td><a href="{{ path('administration') }}">Administration</a></td>{% endif %}
-                                    <td>
-                                        {% if app.user %}
-                                            <a href="{{ path('deconnexion') }}">Me déconnecter</a>
-                                        {% else %}
-                                            <a href="{{ path('login') }}">Login</a>
-                                        {% endif %}
-                                    </td>
+                                    {% if app.user %}
+                                        <td><a href="{{ path('mon_compte') }}">Mon compte</a></td>
+                                        <td><a href="{{ path('deconnexion') }}">Me déconnecter</a></td>
+                                    {% else %}
+                                        <td><a href="{{ path('login') }}">Login</a></td>
+                                    {% endif %}
                                 </tr>
                             </table>
                         </div>

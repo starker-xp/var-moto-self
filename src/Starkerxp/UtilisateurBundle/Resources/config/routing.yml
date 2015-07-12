@@ -1,4 +1,42 @@
 #################################
+# UtilisateurController
+#################################
+mon_compte:
+    path: /mon-compte.html
+    defaults: { _controller: StarkerxpUtilisateurBundle:Utilisateur:monCompte }
+    methods:  [GET]
+    
+modifier_mes_informations:
+    path: /mon-compte/modifier-mes-informations.html
+    defaults: { _controller: StarkerxpUtilisateurBundle:Utilisateur:modifierMesInformations }
+    methods:  [GET]
+    
+put_modifier_mes_informations:
+    path: /mon-compte/modifier-mes-informations.html
+    defaults: { _controller: StarkerxpUtilisateurBundle:Utilisateur:putModifierMesInformations }
+    methods:  [PUT]
+    
+modifier_mon_mot_de_passe:
+    path: /mon-compte/modifier-mon-mot-de-passe.html
+    defaults: { _controller: StarkerxpUtilisateurBundle:Utilisateur:modifierMonMotDePasse }
+    methods:  [GET]
+    
+put_modifier_mon_mot_de_passe:
+    path: /mon-compte/modifier-mon-mot-de-passe.html
+    defaults: { _controller: StarkerxpUtilisateurBundle:Utilisateur:putModifierMonMotDePasse }
+    methods:  [PUT]
+    
+modifier_mes_preferences_de_contact:
+    path: /mon-compte/modifier-mes-preferences-de-contact.html
+    defaults: { _controller: StarkerxpUtilisateurBundle:Utilisateur:modifierMesPreferencesDeContact }
+    methods:  [GET]
+    
+put_modifier_mes_preferences_de_contact:
+    path: /mon-compte/modifier-mes-preferences-de-contact.html
+    defaults: { _controller: StarkerxpUtilisateurBundle:Utilisateur:putModifierMesPreferencesDeContact }
+    methods:  [PUT]
+    
+#################################
 # AuthentificationController
 #################################
 login:

@@ -42,7 +42,6 @@ class CreerAdministrateurCommand extends ContainerAwareCommand
         $command->setNom("Administrateur");
         $command->setPrenom("Administrateur");
         $command->setMotDePasse($motDePasse);
-        $command->setConfirmationMotDePasse($motDePasse);
         $command->setRole("ROLE_ADMIN");
         $commandBus->handle($command);
 

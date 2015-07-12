@@ -7,12 +7,12 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
-class CreerUtilisateurForm extends AbstractType
+class ModifierUtilisateurForm extends AbstractType
 {
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->setMethod('POST')
+        $builder->setMethod('PUT')
                 ->add('role', 'choice', [
                     'label' => "Choisissez un rôle : ",
                     'choices' => ['ROLE_USER' => 'Utilisateur', "ROLE_ADMIN" => "Administrateur"],
@@ -21,8 +21,9 @@ class CreerUtilisateurForm extends AbstractType
                 ->add('email', 'text', ['label' => "Adresse email : ", 'constraints' => [new NotBlank(), new Length(['min' => 3])]])
                 ->add('nom', 'text', ['label' => "Nom : ", 'constraints' => [new NotBlank(), new Length(['min' => 3])]])
                 ->add('prenom', 'text', ['label' => "Prénom : ", 'constraints' => [new NotBlank(), new Length(['min' => 3])]])
-                ->add('motDePasse', 'password', ['label' => "Mot de passe : ", 'constraints' => [new NotBlank(), new Length(['min' => 3])]])
-                ->add('save', 'submit', ['label' => "Créer"]);
+                ->add('motDePasse', 'password', ['label' => "Mot de passe : ", 'required' => false])
+                ->add('estActif', 'checkbox', ['label' => 'Compte actif ?', 'required' => false,])
+                ->add('save', 'submit', ['label' => "Modifier"]);
     }
 
     public function getName()

@@ -2,7 +2,6 @@
 
 namespace Starkerxp\UtilisateurBundle\Controller;
 
-use Starkerxp\UtilisateurBundle\Forms\Utilisateur\CreerUtilisateurForm;
 use Starkerxp\UtilisateurBundle\Services\Command\Utilisateur\CreerUtilisateurCommand;
 use Starkerxp\UtilisateurBundle\Services\Command\Utilisateur\ModifierUtilisateurCommand;
 use Starkerxp\UtilisateurBundle\Services\Command\Utilisateur\SupprimerUtilisateurCommand;
@@ -29,7 +28,7 @@ class AdministrationUtilisateursController extends Controller
 
     public function createAction()
     {
-        $form = $this->createForm(new CreerUtilisateurForm(), new CreerUtilisateurCommand(), [
+        $form = $this->createForm($this->get('form.creer.utilisateur'), new CreerUtilisateurCommand(), [
             'action' => $this->generateUrl('creation_utilisateur'),
         ]);
         $render = $this->render('StarkerxpUtilisateurBundle:Utilisateurs:create.html.twig', [
@@ -40,7 +39,7 @@ class AdministrationUtilisateursController extends Controller
 
     public function postAction(Request $request)
     {
-        $form = $this->createForm(new CreerUtilisateurForm(), new CreerUtilisateurCommand(), [
+        $form = $this->createForm($this->get('form.creer.utilisateur'), new CreerUtilisateurCommand(), [
             'action' => $this->generateUrl('creation_utilisateur'),
         ]);
         $form->handleRequest($request);
@@ -64,7 +63,7 @@ class AdministrationUtilisateursController extends Controller
         $queryBus = $this->get('bus.event.utilisateur');
         $utilisateur = $queryBus->handle($utilisateurQuery);
 
-        $entite = new ModifierUtilisateurCommand();
+        $entite = new ModifierUtilisateurCommand($utilisateurId);
         $entite->depuisDTO($utilisateur);
 
         $form = $this->createForm($this->get('form.modifier.utilisateur'), $entite, [
@@ -73,6 +72,7 @@ class AdministrationUtilisateursController extends Controller
 
         $render = $this->render('StarkerxpUtilisateurBundle:Utilisateurs:edit.html.twig', [
             'form' => $form->createView(),
+            'utilisateur' => $utilisateur,
         ]);
 
         return $render;
@@ -80,8 +80,7 @@ class AdministrationUtilisateursController extends Controller
 
     public function putAction(Request $request, $utilisateurId)
     {
-        $entite = new ModifierUtilisateurCommand();
-        $entite->setUtilisateurId($utilisateurId);
+        $entite = new ModifierUtilisateurCommand($utilisateurId);
 
         $form = $this->createForm($this->get('form.modifier.utilisateur'), $entite, [
             'action' => $this->generateUrl('modification_utilisateur', ['utilisateurId' => $utilisateurId]),

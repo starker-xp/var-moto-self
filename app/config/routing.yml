@@ -1,3 +1,5 @@
+starkerxp_var_moto_self:
+    resource: "@StarkerxpVarMotoSelfBundle/Resources/config/routing.yml"
 starkerxp_ecommerce:
     resource: "@StarkerxpEcommerceBundle/Resources/config/routing.yml"
 starkerxp_utilisateur:

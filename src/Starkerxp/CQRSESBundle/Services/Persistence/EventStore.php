@@ -59,7 +59,10 @@ class EventStore
         $stmt->execute();
         $events = [];
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            $events[] = unserialize(base64_decode($row['data']));
+            $unserialized = unserialize(base64_decode($row['data']));
+            // Permet d'inclure la compatibilité avant l'implémentation des versions dans les events.
+            $unserialized->setVersionSiNull($row['version']);
+            $events[] = $unserialized;
         }
         $stmt->closeCursor();
         return new AggregateHistorique($id, $events);
