@@ -18,10 +18,10 @@ class ModifierUtilisateurForm extends AbstractType
                     'choices' => ['ROLE_USER' => 'Utilisateur', "ROLE_ADMIN" => "Administrateur"],
                     'empty_value' => 'Sélectionner un rôle',
                 ])
-                ->add('email', 'text', ['label' => "Adresse email : ", 'constraints' => [new NotBlank(), new Length(['min' => 3])]])
+                ->add('email', 'email', ['label' => "Adresse email : ", 'constraints' => [new NotBlank(), new Length(['min' => 3])], 'attr' => ['class' => 'calendar']])
                 ->add('nom', 'text', ['label' => "Nom : ", 'constraints' => [new NotBlank(), new Length(['min' => 3])]])
                 ->add('prenom', 'text', ['label' => "Prénom : ", 'constraints' => [new NotBlank(), new Length(['min' => 3])]])
-                ->add('motDePasse', 'password', ['label' => "Mot de passe : ", 'required' => false])
+                ->add('motDePasse', 'password', ['label' => "Définir un nouveau mot de passe : ", 'required' => false])
                 ->add('estActif', 'checkbox', ['label' => 'Compte actif ?', 'required' => false,])
                 ->add('save', 'submit', ['label' => "Modifier"]);
     }

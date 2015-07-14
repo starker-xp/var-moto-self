@@ -28,7 +28,7 @@ class AdministrationUtilisateursController extends Controller
 
     public function createAction()
     {
-        $form = $this->createForm($this->get('form.creer.utilisateur'), new CreerUtilisateurCommand(), [
+        $form = $this->createForm($this->get('form.ajouter.utilisateur'), new CreerUtilisateurCommand(), [
             'action' => $this->generateUrl('creation_utilisateur'),
         ]);
         $render = $this->render('StarkerxpUtilisateurBundle:Utilisateurs:create.html.twig', [
@@ -39,7 +39,7 @@ class AdministrationUtilisateursController extends Controller
 
     public function postAction(Request $request)
     {
-        $form = $this->createForm($this->get('form.creer.utilisateur'), new CreerUtilisateurCommand(), [
+        $form = $this->createForm($this->get('form.ajouter.utilisateur'), new CreerUtilisateurCommand(), [
             'action' => $this->generateUrl('creation_utilisateur'),
         ]);
         $form->handleRequest($request);
@@ -80,6 +80,11 @@ class AdministrationUtilisateursController extends Controller
 
     public function putAction(Request $request, $utilisateurId)
     {
+        $utilisateurQuery = new UtilisateurQuery();
+        $utilisateurQuery->setId($utilisateurId);
+        $queryBus = $this->get('bus.event.utilisateur');
+        $utilisateur = $queryBus->handle($utilisateurQuery);
+
         $entite = new ModifierUtilisateurCommand($utilisateurId);
 
         $form = $this->createForm($this->get('form.modifier.utilisateur'), $entite, [
@@ -93,8 +98,9 @@ class AdministrationUtilisateursController extends Controller
             return $this->redirect($this->generateUrl('liste_utilisateurs'));
         }
 
-        $render = $this->render('StarkerxpUtilisateurBundle:Utilisateurs:create.html.twig', [
+        $render = $this->render('StarkerxpUtilisateurBundle:Utilisateurs:edit.html.twig', [
             'form' => $form->createView(),
+            'utilisateur' => $utilisateur,
         ]);
         return $render;
     }

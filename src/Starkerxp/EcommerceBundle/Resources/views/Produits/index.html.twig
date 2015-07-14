@@ -8,7 +8,7 @@
     <ul>
         {% for produit in produits %}
             <li>{{ produit.libelle }}/{{ produit.marque.libelle }} <a href="{{ path('formulaire_modification_produit', {'produitId': produit.id}) }}">Modifier</a> / <a class="delete" data-href="{{ path('suppression_produit', {'produitId': produit.id}) }}" data-csrf="{{ token }}">Supprimer</a></li>
-            {% endfor %}
+        {% endfor %}
     </ul>
 {% endblock %}
 
@@ -20,10 +20,10 @@
                 $.ajax({
                     url: $(this).data('href'),
                     type: 'delete',
-                    data : {
+                    data: {
                         _token: $(this).data('csrf')
                     },
-                    success : function(json){
+                    success: function (json) {
                         console.log(json);
                     }
                 });

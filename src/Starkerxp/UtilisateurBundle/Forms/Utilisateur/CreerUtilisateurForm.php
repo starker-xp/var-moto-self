@@ -18,7 +18,7 @@ class CreerUtilisateurForm extends AbstractType
                     'choices' => ['ROLE_USER' => 'Utilisateur', "ROLE_ADMIN" => "Administrateur"],
                     'empty_value' => 'Sélectionner un rôle',
                 ])
-                ->add('email', 'text', ['label' => "Adresse email : ", 'constraints' => [new NotBlank(), new Length(['min' => 3])]])
+                ->add('email', 'email', ['label' => "Adresse email : ", 'constraints' => [new NotBlank(), new Length(['min' => 3])]])
                 ->add('nom', 'text', ['label' => "Nom : ", 'constraints' => [new NotBlank(), new Length(['min' => 3])]])
                 ->add('prenom', 'text', ['label' => "Prénom : ", 'constraints' => [new NotBlank(), new Length(['min' => 3])]])
                 ->add('motDePasse', 'password', ['label' => "Mot de passe : ", 'constraints' => [new NotBlank(), new Length(['min' => 3])]])

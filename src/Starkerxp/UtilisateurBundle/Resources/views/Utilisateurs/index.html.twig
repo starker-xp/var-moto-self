@@ -4,26 +4,45 @@
 {% block h1 %}Gestion des utilisateurs{% endblock %}
 
 {% block body %}
-    <div class="entypo circled-plus color-primary" ><a class="small" href="{{ path('formulaire_creation_utilisateur') }}">Ajouter un utilisateur</a></div>
-    <ul>
-        {% for utilisateur in utilisateurs %}
-            <li>{{ utilisateur.nom }} <a href="{{ path('formulaire_modification_utilisateur', {'utilisateurId': utilisateur.id}) }}">Modifier</a> / <a class="delete" data-href="{{ path('suppression_utilisateur', {'utilisateurId': utilisateur.id}) }}" data-csrf="{{ token }}">Supprimer</a></li>
-        {% endfor %}
-    </ul>
+    <a class="btn btn-green btn-sm" href="{{ path('formulaire_creation_utilisateur') }}">Ajouter un utilisateur</a>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Prénom</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for utilisateur in utilisateurs %}
+                <tr>
+                    <td>{{ utilisateur.nom }}</td>
+                    <td>{{ utilisateur.prenom }}</td>
+                    <td>
+                        <div class="btn-group">
+                            <a href="{{ path('formulaire_modification_utilisateur', {'utilisateurId': utilisateur.id}) }}" class="btn btn-primary btn-sm">Modifier</a>
+                            <a href="{{ path('suppression_utilisateur', {'utilisateurId': utilisateur.id}) }}" class="btn btn-danger btn-sm js_delete" data-csrf="{{ token }}">Supprimer</a>
+                        </div>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
 {% endblock %}
 
 {% block javascripts %}
     <script type="text/javascript">
         $(document).ready(function () {
-            $('.delete').click(function (event) {
+            $('.js_delete').click(function (event) {
                 event.preventDefault();
                 $.ajax({
                     url: $(this).data('href'),
                     type: 'delete',
-                    data : {
+                    data: {
                         _token: $(this).data('csrf')
                     },
-                    success : function(json){
+                    success: function (json) {
                         console.log(json);
                     }
                 });

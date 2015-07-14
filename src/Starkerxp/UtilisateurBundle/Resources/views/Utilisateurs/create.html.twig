@@ -2,6 +2,49 @@
 
 {% block h1 %}Gestion des utilisateurs > Ajouter{% endblock %}
 
+
+{% block form_row %}
+    {% spaceless %}
+        <div class="form-group col-sm-6 col-md-6">
+
+            {% if form.vars.cache_key ends with 'checkbox' %}
+                <div>{{ form_widget(form) }}</div>
+            {% else %}
+                {{ form_label(form, null, {'label_attr': {'class': 'form-element-label'}}) }}
+                <div>{{ form_widget(form, {'attr': {'class': 'form-control'}}) }}</div>
+            {% endif %}
+            {{ form_errors(form) }}
+        </div>
+    {% endspaceless %}
+{% endblock form_row %}
+
+{% block checkbox_widget %}
+    {% spaceless %}
+        <div class="checkbox">
+            <label  for="{{ id }}">
+                <input type="checkbox" {{ block('widget_attributes') }}{% if value is defined %} value="{{ value }}"{% endif %}{% if checked %} checked="checked"{% endif %} />{{ label|trans }}
+            </label>
+        </div>
+    {% endspaceless %}
+{% endblock checkbox_widget %}
+
 {% block body %}
-    {{ form(form) }}
+    {{ form_start(form) }}
+    <div class="block-content-inner">
+        <h3>Informations de l'utilisateur</h3>
+        <div class="row">
+            {{ form_row(form.nom) }}
+            {{ form_row(form.prenom) }}
+        </div>
+        <div class="row">{{ form_row(form.email) }}</div>
+        <div class="row">{{ form_row(form.motDePasse) }}</div>
+    </div><br/>
+    <div class="block-content-inner">
+        <h3>Informations du compte</h3>
+        <div class="row">{{ form_row(form.role) }}</div>
+    </div><br/>
+    <div class="row">
+        <div class="col-sm-2">{{ form_widget(form.save, {'attr': {'class': 'btn btn-secondary btn-block'}}) }}</div>
+    </div>
+    {{ form_end(form) }}
 {% endblock %}

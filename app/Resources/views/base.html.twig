@@ -25,16 +25,16 @@
                     <div class="container">
                         <div class="block-content">
                             <div class="block-content-inner">
-                                {% block administration %}{% endblock %}
-                                <h1>{% block h1 %}{% endblock %}</h1>
-                            {% block body %}{% endblock %}
-                        </div>
+                            {% block administration %}{% endblock %}
+                            <h1>{% block h1 %}{% endblock %}</h1>
+                        {% block body %}{% endblock %}
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    {% include "::footer.html.twig" %}
+</div>
+{% include "::footer.html.twig" %}
 </div>
 {% javascripts output="js/main.js" 
             'js/libraries/jquery.js'
