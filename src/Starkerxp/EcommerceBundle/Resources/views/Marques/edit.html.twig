@@ -1,6 +1,19 @@
-{% extends '::base.html.twig' %}
+{% extends '::administration.html.twig' %}
+
+
+{% block h1 %}Gestion des marques > Modifier{% endblock %}
 
 {% block body %}
-    Modification d'une marque :
-    {{ form(form) }}
+    {{ form_start(form) }}
+    <div class="block-content-inner">
+        <div class="row">
+            {{ form_row(form.libelle) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-2">
+            {{ form_widget(form.save, {'attr': {'class': 'btn btn-secondary btn-block'}}) }}
+        </div>
+    </div>
+    {{ form_end(form) }}
 {% endblock %}

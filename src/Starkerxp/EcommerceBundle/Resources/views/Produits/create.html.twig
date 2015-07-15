@@ -2,5 +2,28 @@
 {% block h1 %}Gestion des produits > Ajouter{% endblock %}
 
 {% block body %}
-    {{ form(form) }}
+    {{ form_start(form) }}
+    <div class="block-content-inner">
+        <h3>Fiche du produit</h3>
+        <div class="row">
+            {{ form_row(form.libelle) }}
+            {{ form_row(form.marqueId) }}
+        </div>
+        <div class="row">
+            {{ form_row(form.prix) }}
+            {{ form_row(form.quantite) }}
+        </div>
+        <div class="row">
+            {{ form_row(form.description) }}
+        </div>
+    </div><br/>
+    <div class="block-content-inner">
+        <h3>Ajouter des images</h3>
+        <div class="row">{{ form_row(form.images) }}</div>
+    </div><br/>
+    <div class="row">
+        <div class="col-sm-2">{{ form_widget(form.save, {'attr': {'class': 'btn btn-secondary btn-block'}}) }}</div>
+    </div>
+    {{ form_end(form) }}
 {% endblock %}
+

@@ -4,7 +4,7 @@
 {% block h1 %}Gestion des utilisateurs{% endblock %}
 
 {% block body %}
-    <a class="btn btn-green btn-sm" href="{{ path('formulaire_creation_utilisateur') }}">Ajouter un utilisateur</a>
+    <a class="btn btn-green btn-sm entypo add-user" href="{{ path('formulaire_creation_utilisateur') }}">Ajouter un utilisateur</a>
     <table class="table">
         <thead>
             <tr>
@@ -16,8 +16,8 @@
         <tbody>
             {% for utilisateur in utilisateurs %}
                 <tr>
-                    <td>{{ utilisateur.nom }}</td>
-                    <td>{{ utilisateur.prenom }}</td>
+                    <td>{{ utilisateur.nom|upper }}</td>
+                    <td>{{ utilisateur.prenom|capitalize }}</td>
                     <td>
                         <div class="btn-group">
                             <a href="{{ path('formulaire_modification_utilisateur', {'utilisateurId': utilisateur.id}) }}" class="btn btn-primary btn-sm">Modifier</a>

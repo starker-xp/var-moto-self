@@ -4,18 +4,34 @@
 {% block h1 %}Gestion des marques{% endblock %}
 
 {% block body %}
-    <div class="entypo circled-plus color-primary" ><a class="small" href="{{ path('formulaire_creation_marque') }}">Ajouter une marque</a></div>
-    <ul>
-        {% for marque in marques %}
-            <li>{{ marque.libelle }} <a href="{{ path('formulaire_modification_marque', {'marqueId': marque.id}) }}">Modifier</a> / <a class="delete" data-href="{{ path('suppression_marque', {'marqueId': marque.id}) }}" data-csrf="{{ token }}">Supprimer</a></li>
+    <a class="btn btn-green btn-sm entypo add-to-list" href="{{ path('formulaire_creation_marque') }}">Ajouter une marque</a>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Libelle</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for marque in marques %}
+                <tr>
+                    <td>{{ marque.libelle }}</td>
+                    <td>
+                        <div class="btn-group">
+                            <a href="{{ path('formulaire_modification_marque', {'marqueId': marque.id}) }}" class="btn btn-primary btn-sm">Modifier</a>
+                            <a href="{{ path('suppression_marque', {'marqueId': marque.id}) }}" class="btn btn-danger btn-sm js_delete" data-csrf="{{ token }}">Supprimer</a>
+                        </div>
+                    </td>
+                </tr>
             {% endfor %}
-    </ul>
+        </tbody>
+    </table>
 {% endblock %}
 
 {% block javascripts %}
     <script type="text/javascript">
         $(document).ready(function () {
-            $('.delete').click(function (event) {
+            $('.js_delete').click(function (event) {
                 event.preventDefault();
                 $.ajax({
                     url: $(this).data('href'),

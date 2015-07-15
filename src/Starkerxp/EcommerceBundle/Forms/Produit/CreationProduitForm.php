@@ -36,10 +36,10 @@ class CreationProduitForm extends AbstractType
                     'choices' => $marqueQueryChoices($this->marqueRepository),
                     'empty_value' => 'Sélectionner une marque',
                 ])
-                ->add('prix', 'text', ['label' => "Choisissez un prix : ", 'constraints' => [new NotBlank()]])
+                ->add('prix', 'integer', ['label' => "Choisissez un prix : ", 'constraints' => [new NotBlank()]])
                 ->add('description', 'textarea', ['label' => "Description de votre produit : ", 'constraints' => [new NotBlank()]])
-                ->add('quantite', 'text', ['label' => "Stock disponible : ", 'constraints' => [new NotBlank()]])
-                ->add('images', new FilesType(), ["label" => "Photos"])
+                ->add('quantite', 'integer', ['label' => "Stock disponible : ", 'constraints' => [new NotBlank()]])
+                ->add('images', new FilesType())
                 ->add('save', 'submit', ['label' => "Créer"]);
     }
 

@@ -2,9 +2,9 @@
     font-family: 'EntypoRegular';
     src: url($entypo_path + 'fonts/entypo.eot');
     src: url($entypo_path + 'fonts/entypo.eot?#iefix') format('embedded-opentype'),
-         url($entypo_path + 'fonts/entypo.woff') format('woff'),
-         url($entypo_path + 'fonts/entypo.ttf') format('truetype'),
-         url($entypo_path + 'fonts/entypo.svg#EntypoRegular') format('svg');
+        url($entypo_path + 'fonts/entypo.woff') format('woff'),
+        url($entypo_path + 'fonts/entypo.ttf') format('truetype'),
+        url($entypo_path + 'fonts/entypo.svg#EntypoRegular') format('svg');
     font-weight: normal;
     font-style: normal;
 }
@@ -13,29 +13,29 @@
     font-family: 'EntypoSocialRegular';
     src: url($entypo_path + 'fonts/entypo-social.eot');
     src: url($entypo_path + 'fonts/entypo-social.eot?#iefix') format('embedded-opentype'),
-         url($entypo_path + 'fonts/entypo-social.woff') format('woff'),
-         url($entypo_path + 'fonts/entypo-social.ttf') format('truetype'),
-         url($entypo_path + 'fonts/entypo-social.svg#EntypoRegular') format('svg');
+        url($entypo_path + 'fonts/entypo-social.woff') format('woff'),
+        url($entypo_path + 'fonts/entypo-social.ttf') format('truetype'),
+        url($entypo_path + 'fonts/entypo-social.svg#EntypoRegular') format('svg');
     font-weight: normal;
     font-style: normal;
 }
 
 .entypo {
-	font-family: 'EntypoRegular';
-	font-size: 2em;
+    font-family: 'EntypoRegular';
+    font-size: 1.2em;
     font-style: normal;
-	font-weight: normal;
+    font-weight: normal;
     display: inline-block;
-	line-height: 1;
+    line-height: 1;
 }
 
 .entypo-social {
-	font-family: 'EntypoSocialRegular';
-	font-size: 2em;
+    font-family: 'EntypoSocialRegular';
+    font-size: 2em;
     font-style: normal;
-	font-weight: normal;
+    font-weight: normal;
     display: inline-block;
-	line-height: 1;
+    line-height: 1;
 }
 
 .entypo.phone:before{ content:'\1F4DE'; }

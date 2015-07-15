@@ -1,0 +1,36 @@
+{% extends 'form_div_layout.html.twig' %}
+
+{% block form_row %}
+    {% spaceless %}
+        <div class="form-group col-sm-6 col-md-6">
+            {% if form.vars.cache_key ends with 'checkbox' %}
+                <div>{{ form_widget(form) }}</div>
+            {% else %}
+                {{ form_label(form, null, {'label_attr': {'class': 'form-element-label'}}) }}
+                <div>{{ form_widget(form, {'attr': {'class': 'form-control'}}) }}</div>
+            {% endif %}
+            {{ form_errors(form) }}
+        </div>
+    {% endspaceless %}
+{% endblock form_row %}
+
+{% block checkbox_widget %}
+    {% spaceless %}
+        <div class="checkbox">
+            <label  for="{{ id }}">
+                <input type="checkbox" {{ block('widget_attributes') }}{% if value is defined %} value="{{ value }}"{% endif %}{% if checked %} checked="checked"{% endif %} />{{ label|trans }}
+            </label>
+        </div>
+    {% endspaceless %}
+{% endblock checkbox_widget %}
+
+{% block textarea_row %}
+    {% spaceless %}
+        <div class="form-group col-sm-12 col-md-12">
+            {{ form_label(form, null, {'label_attr': {'class': 'form-element-label'}}) }}
+            <div>{{ form_widget(form, {'attr': {'class': 'form-control', 'rows': '7'}}) }}</div>
+        </div>
+        {{ form_errors(form) }}
+    {% endspaceless %}
+{% endblock textarea_row %}
+
