@@ -7,8 +7,10 @@ use Starkerxp\EcommerceBundle\Services\Domain\Produit\Event\ProduitAEteCreeV2;
 use Starkerxp\EcommerceBundle\Services\Domain\Produit\Event\UneModificationDeLaDescriptionProduit;
 use Starkerxp\EcommerceBundle\Services\Domain\Produit\Event\UneModificationDeLaMarqueProduit;
 use Starkerxp\EcommerceBundle\Services\Domain\Produit\Event\UneModificationDeLaQuantiteProduit;
+use Starkerxp\EcommerceBundle\Services\Domain\Produit\Event\UneModificationDeLImageParDefautDuProduit;
 use Starkerxp\EcommerceBundle\Services\Domain\Produit\Event\UneModificationDuLibelleProduit;
 use Starkerxp\EcommerceBundle\Services\Domain\Produit\Event\UneModificationDuPrixProduit;
+use Starkerxp\EcommerceBundle\Services\Domain\Produit\Event\UneNouvellePhotoAEteAjoute;
 use Starkerxp\EcommerceBundle\Services\Domain\Produit\Event\UnProduitAEteSupprime;
 
 class ProduitDomain extends DomainEvents
@@ -20,9 +22,10 @@ class ProduitDomain extends DomainEvents
     private $prix;
     private $quantite;
     private $marqueId;
-    private $images;
+    private $images = [];
+    private $imagesParDefaut;
 
-    private function __construct($produitId, $marqueId, $libelle, $description, $prix, $quantite, $images)
+    private function __construct($produitId, $marqueId, $libelle, $description, $prix, $quantite)
     {
         $this->produitId = $produitId;
         $this->marqueId = $marqueId;
@@ -30,7 +33,6 @@ class ProduitDomain extends DomainEvents
         $this->description = $description;
         $this->prix = $prix;
         $this->quantite = $quantite;
-        $this->images = $images;
     }
 
     public function getAggregateId()
@@ -40,8 +42,19 @@ class ProduitDomain extends DomainEvents
 
     public static function cree($produitId, $marqueId, $libelle, $description, $prix, $quantite, $images)
     {
-        $nouveauProduit = new ProduitDomain($produitId, $marqueId, $libelle, $description, $prix, $quantite, $images);
-        $nouveauProduit->enregistrementEvenement(new ProduitAEteCreeV2($produitId, $marqueId, $libelle, $description, $prix, $quantite, $images));
+        $nouveauProduit = new ProduitDomain($produitId, $marqueId, $libelle, $description, $prix, $quantite);
+        $nouveauProduit->enregistrementEvenement(new ProduitAEteCreeV2($produitId, $marqueId, $libelle, $description, $prix, $quantite));
+        $version = 2;
+        if (empty($images)) {
+            return $nouveauProduit;
+        }
+
+        foreach ($images as $imagePOPO) {
+            $eventImage = new UneNouvellePhotoAEteAjoute($imagePOPO->getId(), $produitId, $imagePOPO->getUrl(), $imagePOPO->getAffichageParDefaut());
+            $eventImage->setVersion($version);
+            $nouveauProduit->enregistrementEvenement($eventImage);
+            $version++;
+        }
         return $nouveauProduit;
     }
 
@@ -62,7 +75,16 @@ class ProduitDomain extends DomainEvents
     public function applyProduitAEteCreeV2($event)
     {
         $this->applyProduitAEteCree($event);
-        $this->images = $event->getImages();
+    }
+
+    public function applyUneNouvellePhotoAEteAjoute($event)
+    {
+        $this->images[$event->getAggregateId()] = $event->versTableau();
+    }
+
+    public function applyUneModificationDeLImageParDefautDuProduit($event)
+    {
+        $this->imagesParDefaut = $event->getImagesParDefaut();
     }
 
     public function modifierLeLibelle($libelle)
@@ -155,6 +177,17 @@ class ProduitDomain extends DomainEvents
         if ($this->marqueId != ($marqueId = $command->getMarqueId())) {
             $this->modifierLaMarque($marqueId);
         }
+        if ($this->imagesParDefaut != ($imagesParDefaut = $command->getImagesParDefaut())) {
+            $this->modifierImageParDefaut($imagesParDefaut);
+        }
+    }
+
+    public function modifierImageParDefaut($imagesParDefaut)
+    {
+        $event = new UneModificationDeLImageParDefautDuProduit($this->produitId, $imagesParDefaut);
+        $event->setVersion($this->getUpdateVersion());
+        $this->enregistrementEvenement($event);
+        $this->apply($event);
     }
 
     public function supprimerUnProduit()

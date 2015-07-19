@@ -8,8 +8,10 @@ use Starkerxp\EcommerceBundle\Services\Domain\Produit\Event\ProduitAEteCreeV2;
 use Starkerxp\EcommerceBundle\Services\Domain\Produit\Event\UneModificationDeLaDescriptionProduit;
 use Starkerxp\EcommerceBundle\Services\Domain\Produit\Event\UneModificationDeLaMarqueProduit;
 use Starkerxp\EcommerceBundle\Services\Domain\Produit\Event\UneModificationDeLaQuantiteProduit;
+use Starkerxp\EcommerceBundle\Services\Domain\Produit\Event\UneModificationDeLImageParDefautDuProduit;
 use Starkerxp\EcommerceBundle\Services\Domain\Produit\Event\UneModificationDuLibelleProduit;
 use Starkerxp\EcommerceBundle\Services\Domain\Produit\Event\UneModificationDuPrixProduit;
+use Starkerxp\EcommerceBundle\Services\Domain\Produit\Event\UneNouvellePhotoAEteAjoute;
 use Starkerxp\EcommerceBundle\Services\Domain\Produit\Event\UnProduitAEteSupprime;
 
 class ProduitProjection extends AbstractProjection
@@ -41,19 +43,36 @@ class ProduitProjection extends AbstractProjection
             ':prix' => $event->getPrix(),
             ':quantite' => $event->getQuantite(),
         ]);
+    }
 
-        $images = $event->getImages();
-        if (empty($images)) {
-            return;
-        }
-        $sqlImages = 'INSERT INTO produits_images (produit_id, url) VALUES (:produit_id, :url)';
+    public function projectUneNouvellePhotoAEteAjoute(UneNouvellePhotoAEteAjoute $event)
+    {
+        $sqlImages = 'INSERT INTO produits_images (id, produit_id, url, affichage_par_defaut) VALUES (:id, :produit_id, :url, :affichage_par_defaut)';
         $stmtImages = $this->getPdo()->prepare($sqlImages);
-        foreach ($images as $image) {
-            $stmtImages->execute([
-                ':produit_id' => $event->getAggregateId(),
-                ':url' => $image,
-            ]);
-        }
+        $stmtImages->execute([
+            ':id' => $event->getImageProduitId(),
+            ':produit_id' => $event->getAggregateId(),
+            ':url' => $event->getUrl(),
+            ':affichage_par_defaut' => $event->getAffichageParDefaut(),
+        ]);
+    }
+
+    public function projectUneModificationDeLImageParDefautDuProduit(UneModificationDeLImageParDefautDuProduit $event)
+    {
+        $sqlImages = "UPDATE produits_images SET affichage_par_defaut=:affichage_par_defaut WHERE produit_id= :produit_id";
+        $stmtImages = $this->getPdo()->prepare($sqlImages);
+        $stmtImages->execute([
+            ':produit_id' => $event->getAggregateId(),
+            ':affichage_par_defaut' => 0,
+        ]);
+
+        $sql = 'UPDATE produits_images SET affichage_par_defaut=:affichage_par_defaut WHERE produit_id= :produit_id AND id=:id';
+        $stmt = $this->getPdo()->prepare($sql);
+        $stmt->execute([
+            ':produit_id' => $event->getAggregateId(),
+            ':id' => $event->getImagesParDefaut(),
+            ':affichage_par_defaut' => 1,
+        ]);
     }
 
     public function projectUneModificationDeLaMarqueProduit(UneModificationDeLaMarqueProduit $event)

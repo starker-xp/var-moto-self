@@ -13,6 +13,8 @@ class ModifierProduitCommand implements CommandInterface
     private $prix;
     private $quantite;
     private $marqueId;
+    private $images;
+    private $imagesParDefaut;
 
     public function depuisDTO($dto)
     {
@@ -23,6 +25,8 @@ class ModifierProduitCommand implements CommandInterface
         $this->setQuantite($dto->getQuantite());
         $marque = $dto->getMarque();
         $this->setMarqueId($marque->getId());
+        $this->setImages($dto->getImages());
+        $this->setImagesParDefaut($dto->getImagesParDefaut());
     }
 
     /**
@@ -94,6 +98,28 @@ class ModifierProduitCommand implements CommandInterface
     public function setMarqueId($marqueId)
     {
         $this->marqueId = $marqueId;
+        return $this;
+    }
+
+    public function getImages()
+    {
+        return $this->images;
+    }
+
+    public function setImages($images)
+    {
+        $this->images = $images;
+        return $this;
+    }
+
+    public function getImagesParDefaut()
+    {
+        return $this->imagesParDefaut;
+    }
+
+    public function setImagesParDefaut($imagesParDefaut)
+    {
+        $this->imagesParDefaut = $imagesParDefaut;
         return $this;
     }
 

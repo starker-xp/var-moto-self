@@ -5,8 +5,8 @@ namespace Starkerxp\EcommerceBundle\Controller;
 use Starkerxp\EcommerceBundle\Services\Command\Produit\CreerProduitCommand;
 use Starkerxp\EcommerceBundle\Services\Command\Produit\ModifierProduitCommand;
 use Starkerxp\EcommerceBundle\Services\Command\Produit\SupprimerProduitCommand;
+use Starkerxp\EcommerceBundle\Services\Query\Produit\ModifierProduitQuery;
 use Starkerxp\EcommerceBundle\Services\Query\Produit\ProduitListerQuery;
-use Starkerxp\EcommerceBundle\Services\Query\Produit\ProduitQuery;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -46,11 +46,9 @@ class AdministrationProduitsController extends Controller
         if ($form->isValid()) {
             $commandForm = $form->getData();
 
-
             $uploader = $this->get('uploader.produits');
             $listeUrls = $uploader->upload();
             $commandForm->setImages($listeUrls);
-
 
             $commandBus = $this->get('bus.command.produit');
             $commandBus->handle($commandForm);
@@ -66,8 +64,9 @@ class AdministrationProduitsController extends Controller
 
     public function editAction($produitId)
     {
-        $produitQuery = new ProduitQuery();
+        $produitQuery = new ModifierProduitQuery();
         $produitQuery->setId($produitId);
+
         $queryBus = $this->get('bus.event.produit');
         $produit = $queryBus->handle($produitQuery);
 
@@ -80,6 +79,7 @@ class AdministrationProduitsController extends Controller
 
         $render = $this->render('StarkerxpEcommerceBundle:Produits:edit.html.twig', [
             'form' => $form->createView(),
+            'produitId' => $produitId,
         ]);
 
         return $render;
@@ -103,6 +103,7 @@ class AdministrationProduitsController extends Controller
 
         $render = $this->render('StarkerxpEcommerceBundle:Produits:create.html.twig', [
             'form' => $form->createView(),
+            'produitId' => $produitId,
         ]);
         return $render;
     }

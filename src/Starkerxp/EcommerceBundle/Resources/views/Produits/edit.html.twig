@@ -1,8 +1,84 @@
 {% extends '::administration.html.twig' %}
-
 {% block h1 %}Gestion des produits > Modifier{% endblock %}
+{% set token = csrf_token('') %}
 
 {% block body %}
-    Modification d'un produit :
-    {{ form(form) }}
+    {{ form_start(form) }}
+    <div class="block-content-inner">
+        <h3>Fiche du produit</h3>
+        <div class="row">
+            {{ form_row(form.libelle) }}
+            {{ form_row(form.marqueId) }}
+        </div>
+        <div class="row">
+            {{ form_row(form.prix) }}
+            {{ form_row(form.quantite) }}
+        </div>
+        <div class="row">
+            {{ form_row(form.description) }}
+        </div>
+    </div><br/>
+    <div class="block-content-inner">
+        <h3>Gérer les images</h3>
+
+        <div class="row">
+            <h4>Ajouter de nouvelles images</h4>
+            {{ form_row(form.images) }}
+        </div>
+        <div class="row">
+            <h4>Gérer les images disponible</h4>
+            <div class="form-group col-sm-12 col-md-12">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Images </th>
+                            <th>Photo par défaut</th>
+                            <th>Supprimer</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{ form_row(form.imagesParDefaut) }}
+                        <tr>
+                            <td colspan="2"></td>
+                            <td><a href="{{ path('suppression_images_produit') }}" class="btn btn-danger btn-sm js_delete" data-produit-id="{{produitId}}" data-csrf="{{ token }}">Supprimer les photos</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div><br/>
+    <div class="row">
+        <div class="col-sm-2">{{ form_widget(form.save, {'attr': {'class': 'btn btn-secondary btn-block'}}) }}</div>
+    </div>
+    {{ form_end(form) }}
+{% endblock %}
+
+{% form_theme form _self %}
+
+{% block _form_modification_produit_imagesParDefaut_row %}
+    {{ form_widget(form)}}
+{% endblock %}
+
+{% block _form_modification_produit_imagesParDefaut_entry_widget %}
+    {% spaceless %}
+        <tr>
+            <td><img src="/{{ label|trans }}" width="100"/></td>
+            <td>
+                <label  for="{{ id }}">
+                    <input type="radio" {{ block('widget_attributes') }}{% if value is defined %} value="{{ value }}"{% endif %}{% if checked %} checked="checked"{% endif %} /> Choisir
+                </label>
+            </td>
+            <td><a href="{{ path('suppression_image_produit', {'imageProduitId': value}) }}" class="btn btn-danger btn-sm js_delete">Supprimer</a></td>
+        </tr>
+    {% endspaceless %}
+{% endblock %}
+
+{% block _form_modification_produit_imagesParDefaut_entry_label %}
+    {% spaceless %}
+    {% endspaceless %}
+{% endblock %}
+
+{% block _form_modification_produit_images_label %}
+    {% spaceless %}
+    {% endspaceless %}
 {% endblock %}

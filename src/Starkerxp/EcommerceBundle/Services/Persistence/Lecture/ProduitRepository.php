@@ -13,10 +13,11 @@ class ProduitRepository
     private $pdo;
     private $marqueRepository;
 
-    public function __construct($pdo, MarqueRepository $marqueRepository)
+    public function __construct($pdo, MarqueRepository $marqueRepository, ImagesProduitRepository $imagesProduitRepository)
     {
         $this->pdo = $pdo;
         $this->marqueRepository = $marqueRepository;
+        $this->imagesProduitRepository = $imagesProduitRepository;
     }
 
     /**
@@ -55,16 +56,32 @@ class ProduitRepository
     }
 
     /**
+     * On récupère un produit avec ses images.
+     *
+     * @param type $produitId L'id du produit.
+     *
+     * @return ProduitPOPO
+     */
+    public function getPourModification($produitId)
+    {
+        $produitPOPO = $this->get($produitId);
+        $produitPOPO->getImages();
+        $produitPOPO->getImagesParDefaut();
+        return $produitPOPO;
+    }
+
+    /**
      * On génère un nouvel objet produitPOPO à partir des données issus de la base de données.
      *
      * @param array $row
-     * 
+     *
      * @return ProduitPOPO
      */
     private function _buildFromData($row)
     {
         $produitPOPO = new ProduitPOPO($row['id'], $row['marque_id'], $row['libelle'], $row['description'], $row['prix'], $row['quantite'], $row['sku']);
         $produitPOPO->setMarqueRepository($this->marqueRepository);
+        $produitPOPO->setImagesProduitRepository($this->imagesProduitRepository);
         return $produitPOPO;
     }
 

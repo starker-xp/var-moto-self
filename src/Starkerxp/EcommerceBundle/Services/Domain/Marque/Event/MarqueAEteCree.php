@@ -14,6 +14,7 @@ class MarqueAEteCree extends AbstractEvent
     {
         $this->marqueId = $marqueId;
         $this->libelle = $libelle;
+        $this->version = 1;
     }
 
     public function getAggregateId()

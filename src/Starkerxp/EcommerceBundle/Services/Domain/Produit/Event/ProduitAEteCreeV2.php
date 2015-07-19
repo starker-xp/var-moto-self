@@ -13,9 +13,8 @@ class ProduitAEteCreeV2 extends AbstractEvent
     private $prix;
     private $quantite;
     private $marqueId;
-    private $images;
 
-    public function __construct($produitId, $marqueId, $libelle, $description, $prix, $quantite, $images)
+    public function __construct($produitId, $marqueId, $libelle, $description, $prix, $quantite)
     {
         $this->produitId = $produitId;
         $this->marqueId = $marqueId;
@@ -23,7 +22,7 @@ class ProduitAEteCreeV2 extends AbstractEvent
         $this->description = $description;
         $this->prix = $prix;
         $this->quantite = $quantite;
-        $this->images = $images;
+        $this->version = 1;
     }
 
     public function getAggregateId()
@@ -54,11 +53,6 @@ class ProduitAEteCreeV2 extends AbstractEvent
     public function getMarqueId()
     {
         return $this->marqueId;
-    }
-
-    public function getImages()
-    {
-        return $this->images;
     }
 
 }

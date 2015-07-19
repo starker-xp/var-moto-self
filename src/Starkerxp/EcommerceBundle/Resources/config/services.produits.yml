@@ -16,11 +16,15 @@ services :
         calls:
             - [register, ["@handler.query.lister_produit"]]
             - [register, ["@handler.query.get_produit"]]
+            - [register, ["@handler.query.get_modifier_produit"]]
             
     # Repository
     repository.read.produit:
         class: "Starkerxp\\EcommerceBundle\\Services\\Persistence\\Lecture\\ProduitRepository"
-        arguments: ["@doctrine.dbal.read_connection", "@repository.read.marque"]
+        arguments: ["@doctrine.dbal.read_connection", "@repository.read.marque" , "@repository.read.images_produit"]
+    repository.read.images_produit:
+        class: "Starkerxp\\EcommerceBundle\\Services\\Persistence\\Lecture\\ImagesProduitRepository"
+        arguments: ["@doctrine.dbal.read_connection"]
     repository.write.produit:
         class: "Starkerxp\\EcommerceBundle\\Services\\Persistence\\Ecriture\\Produit\\ProduitRepository"
         arguments: ["@event_store", "@projection.produit"]
@@ -37,6 +41,9 @@ services :
     handler.query.get_produit:
         class: "Starkerxp\\EcommerceBundle\\Services\\Query\\Produit\\ProduitQueryHandler"
         arguments: ["@repository.read.produit"]
+    handler.query.get_modifier_produit:
+        class: "Starkerxp\\EcommerceBundle\\Services\\Query\\Produit\\ModifierProduitQueryHandler"
+        arguments: ["@repository.read.produit"]
         
     # Command
     handler.command.creation_produit:
@@ -49,3 +56,10 @@ services :
         class: "Starkerxp\\EcommerceBundle\\Services\\Command\\Produit\\SupprimerProduitHandler"
         arguments: ["@repository.write.produit"]
         
+    # Formulaire
+    form.ajouter.produit:
+        class: "Starkerxp\\EcommerceBundle\\Forms\\Produit\\CreationProduitForm"
+        arguments: ["@repository.read.marque"]
+    form.modifier.produit:
+        class: "Starkerxp\\EcommerceBundle\\Forms\\Produit\\ModificationProduitForm"
+        arguments: ["@repository.read.marque", "@repository.read.produit"]

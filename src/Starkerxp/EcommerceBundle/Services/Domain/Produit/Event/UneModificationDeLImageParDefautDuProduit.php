@@ -4,16 +4,16 @@ namespace Starkerxp\EcommerceBundle\Services\Domain\Produit\Event;
 
 use \Starkerxp\CQRSESBundle\Services\Domain\AbstractEvent;
 
-class UneModificationDeLaMarqueProduit extends AbstractEvent
+class UneModificationDeLImageParDefautDuProduit extends AbstractEvent
 {
 
     private $produitId;
-    private $marqueId;
+    private $imagesParDefaut;
 
-    public function __construct($produitId, $marqueId)
+    public function __construct($produitId, $imagesParDefaut)
     {
         $this->produitId = $produitId;
-        $this->marqueId = $marqueId;
+        $this->imagesParDefaut = $imagesParDefaut;
     }
 
     public function getAggregateId()
@@ -21,9 +21,9 @@ class UneModificationDeLaMarqueProduit extends AbstractEvent
         return $this->produitId;
     }
 
-    public function getMarqueId()
+    public function getImagesParDefaut()
     {
-        return $this->marqueId;
+        return $this->imagesParDefaut;
     }
 
 }
