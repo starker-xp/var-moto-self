@@ -40,7 +40,7 @@
                         {{ form_row(form.imagesParDefaut) }}
                         <tr>
                             <td colspan="2"></td>
-                            <td><a href="{{ path('suppression_images_produit') }}" class="btn btn-danger btn-sm js_delete" data-produit-id="{{produitId}}" data-csrf="{{ token }}">Supprimer les photos</a></td>
+                            <td><a href="#" data-href="{{ path('suppression_images_produit') }}" class="btn btn-danger btn-sm js_delete" data-produit-id="{{produitId}}">Supprimer les photos</a></td>
                         </tr>
                     </tbody>
                 </table>
@@ -51,6 +51,44 @@
         <div class="col-sm-2">{{ form_widget(form.save, {'attr': {'class': 'btn btn-secondary btn-block'}}) }}</div>
     </div>
     {{ form_end(form) }}
+{% endblock %}
+
+
+
+{% block javascripts %}
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.js_delete_image').click(function (event) {
+                event.preventDefault();
+                $.ajax({
+                    url: $(this).data('href'),
+                    type: 'delete',
+                    data : {
+                        _token: '{{ token }}',
+                        produitId: '{{produitId}}'
+                    },
+                    success : function(json){
+                        console.log(json);
+                    }
+                });
+            });
+            
+            $('.js_delete').click(function (event) {
+                event.preventDefault();
+                $.ajax({
+                    url: $(this).data('href'),
+                    type: 'delete',
+                    data : {
+                        _token: '{{ token }}',
+                        produitId : $(this).data('produit-id')
+                    },
+                    success : function(json){
+                        console.log(json);
+                    }
+                });
+            });
+        });
+    </script>
 {% endblock %}
 
 {% form_theme form _self %}
@@ -68,7 +106,7 @@
                     <input type="radio" {{ block('widget_attributes') }}{% if value is defined %} value="{{ value }}"{% endif %}{% if checked %} checked="checked"{% endif %} /> Choisir
                 </label>
             </td>
-            <td><a href="{{ path('suppression_image_produit', {'imageProduitId': value}) }}" class="btn btn-danger btn-sm js_delete">Supprimer</a></td>
+            <td><a href="#" data-href="{{ path('suppression_image_produit', {'imageProduitId': value}) }}" class="btn btn-danger btn-sm js_delete_image">Supprimer</a></td>
         </tr>
     {% endspaceless %}
 {% endblock %}

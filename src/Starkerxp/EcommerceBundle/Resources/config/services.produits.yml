@@ -10,6 +10,7 @@ services :
             - [register, ["@handler.command.creation_produit"]]
             - [register, ["@handler.command.modification_produit"]]
             - [register, ["@handler.command.supprimer_produit"]]
+            - [register, ["@handler.command.supprimer_image_produit"]]
             
     bus.event.produit:
         class: "Starkerxp\\CQRSESBundle\\Services\\Query\\QueryBus"
@@ -17,6 +18,7 @@ services :
             - [register, ["@handler.query.lister_produit"]]
             - [register, ["@handler.query.get_produit"]]
             - [register, ["@handler.query.get_modifier_produit"]]
+            - [register, ["@handler.query.get_image_produit_par_defaut"]]
             
     # Repository
     repository.read.produit:
@@ -43,7 +45,10 @@ services :
         arguments: ["@repository.read.produit"]
     handler.query.get_modifier_produit:
         class: "Starkerxp\\EcommerceBundle\\Services\\Query\\Produit\\ModifierProduitQueryHandler"
-        arguments: ["@repository.read.produit"]
+        arguments: ["@repository.read.produit"]    
+    handler.query.get_image_produit_par_defaut:
+        class: "Starkerxp\\EcommerceBundle\\Services\\Query\\Produit\\ImageProduitParDefautQueryHandler"
+        arguments: ["@repository.read.images_produit"]
         
     # Command
     handler.command.creation_produit:
@@ -55,6 +60,9 @@ services :
     handler.command.supprimer_produit:
         class: "Starkerxp\\EcommerceBundle\\Services\\Command\\Produit\\SupprimerProduitHandler"
         arguments: ["@repository.write.produit"]
+    handler.command.supprimer_image_produit:
+        class: "Starkerxp\\EcommerceBundle\\Services\\Command\\Produit\\SupprimerImageProduitHandler"
+        arguments: ["@repository.write.produit", "@uploader.produits"]
         
     # Formulaire
     form.ajouter.produit:

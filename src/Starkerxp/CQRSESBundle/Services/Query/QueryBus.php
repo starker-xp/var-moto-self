@@ -2,7 +2,8 @@
 
 namespace Starkerxp\CQRSESBundle\Services\Query;
 
-use \Starkerxp\CQRSESBundle\Services\Bus\AbstractBus;
+use Exception;
+use Starkerxp\CQRSESBundle\Services\Bus\AbstractBus;
 
 class QueryBus extends AbstractBus
 {
@@ -11,6 +12,9 @@ class QueryBus extends AbstractBus
 
     public function handle(QueryInterface $action)
     {
+        if (empty($this->handlers[get_class($action)])) {
+            throw new Exception("Le handler n'est pas définit.");
+        }
         $actionHandler = $this->handlers[get_class($action)];
         return $actionHandler->handle($action);
     }

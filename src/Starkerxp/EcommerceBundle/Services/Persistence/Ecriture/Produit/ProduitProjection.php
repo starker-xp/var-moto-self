@@ -5,6 +5,7 @@ namespace Starkerxp\EcommerceBundle\Services\Persistence\Ecriture\Produit;
 use Starkerxp\CQRSESBundle\Services\Persistence\AbstractProjection;
 use Starkerxp\EcommerceBundle\Services\Domain\Produit\Event\ProduitAEteCree;
 use Starkerxp\EcommerceBundle\Services\Domain\Produit\Event\ProduitAEteCreeV2;
+use Starkerxp\EcommerceBundle\Services\Domain\Produit\Event\UneImageProduitAEteSupprime;
 use Starkerxp\EcommerceBundle\Services\Domain\Produit\Event\UneModificationDeLaDescriptionProduit;
 use Starkerxp\EcommerceBundle\Services\Domain\Produit\Event\UneModificationDeLaMarqueProduit;
 use Starkerxp\EcommerceBundle\Services\Domain\Produit\Event\UneModificationDeLaQuantiteProduit;
@@ -131,6 +132,16 @@ class ProduitProjection extends AbstractProjection
         $stmt = $this->getPdo()->prepare($sql);
         $stmt->execute([
             ':produit_id' => $event->getAggregateId()
+        ]);
+    }
+
+    public function projectUneImageProduitAEteSupprime(UneImageProduitAEteSupprime $event)
+    {
+        $sql = 'DELETE FROM produits_images WHERE id= :image_produit_id AND produit_id= :produit_id';
+        $stmt = $this->getPdo()->prepare($sql);
+        $stmt->execute([
+            ':produit_id' => $event->getAggregateId(),
+            ':image_produit_id' => $event->getImageProduitId(),
         ]);
     }
 

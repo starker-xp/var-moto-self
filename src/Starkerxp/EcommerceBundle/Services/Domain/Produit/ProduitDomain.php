@@ -3,7 +3,11 @@
 namespace Starkerxp\EcommerceBundle\Services\Domain\Produit;
 
 use Starkerxp\CQRSESBundle\Services\Domain\DomainEvents;
+use Starkerxp\EcommerceBundle\Services\Command\Produit\ModifierProduitCommand;
+use Starkerxp\EcommerceBundle\Services\Command\Produit\SupprimerImageProduitCommand;
+use Starkerxp\EcommerceBundle\Services\Command\Produit\SupprimerProduitCommand;
 use Starkerxp\EcommerceBundle\Services\Domain\Produit\Event\ProduitAEteCreeV2;
+use Starkerxp\EcommerceBundle\Services\Domain\Produit\Event\UneImageProduitAEteSupprime;
 use Starkerxp\EcommerceBundle\Services\Domain\Produit\Event\UneModificationDeLaDescriptionProduit;
 use Starkerxp\EcommerceBundle\Services\Domain\Produit\Event\UneModificationDeLaMarqueProduit;
 use Starkerxp\EcommerceBundle\Services\Domain\Produit\Event\UneModificationDeLaQuantiteProduit;
@@ -48,12 +52,17 @@ class ProduitDomain extends DomainEvents
         if (empty($images)) {
             return $nouveauProduit;
         }
-
-        foreach ($images as $imagePOPO) {
+        foreach ($images as $key => $imagePOPO) {
             $eventImage = new UneNouvellePhotoAEteAjoute($imagePOPO->getId(), $produitId, $imagePOPO->getUrl(), $imagePOPO->getAffichageParDefaut());
             $eventImage->setVersion($version);
             $nouveauProduit->enregistrementEvenement($eventImage);
             $version++;
+            if ($key == 0) {
+                $eventImage = new UneModificationDeLImageParDefautDuProduit($produitId, $imagePOPO->getId());
+                $eventImage->setVersion($version);
+                $nouveauProduit->enregistrementEvenement($eventImage);
+                $version++;
+            }
         }
         return $nouveauProduit;
     }
@@ -77,16 +86,6 @@ class ProduitDomain extends DomainEvents
         $this->applyProduitAEteCree($event);
     }
 
-    public function applyUneNouvellePhotoAEteAjoute($event)
-    {
-        $this->images[$event->getAggregateId()] = $event->versTableau();
-    }
-
-    public function applyUneModificationDeLImageParDefautDuProduit($event)
-    {
-        $this->imagesParDefaut = $event->getImagesParDefaut();
-    }
-
     public function modifierLeLibelle($libelle)
     {
         $event = new UneModificationDuLibelleProduit($this->produitId, $libelle);
@@ -95,7 +94,7 @@ class ProduitDomain extends DomainEvents
         $this->apply($event);
     }
 
-    public function applyUneModificationDuLibelleProduit($event)
+    public function applyUneModificationDuLibelleProduit(UneModificationDuLibelleProduit $event)
     {
         $this->libelle = $event->getLibelle();
     }
@@ -108,7 +107,7 @@ class ProduitDomain extends DomainEvents
         $this->apply($event);
     }
 
-    public function applyUneModificationDeLaDescriptionProduit($event)
+    public function applyUneModificationDeLaDescriptionProduit(UneModificationDeLaDescriptionProduit $event)
     {
         $this->description = $event->getDescription();
     }
@@ -121,7 +120,7 @@ class ProduitDomain extends DomainEvents
         $this->apply($event);
     }
 
-    public function applyUneModificationDuPrixProduit($event)
+    public function applyUneModificationDuPrixProduit(UneModificationDuPrixProduit $event)
     {
         $this->prix = $event->getPrix();
     }
@@ -134,7 +133,7 @@ class ProduitDomain extends DomainEvents
         $this->apply($event);
     }
 
-    public function applyUneModificationDeLaQuantiteProduit($event)
+    public function applyUneModificationDeLaQuantiteProduit(UneModificationDeLaQuantiteProduit $event)
     {
         $this->quantite = $event->getQuantite();
     }
@@ -147,12 +146,12 @@ class ProduitDomain extends DomainEvents
         $this->apply($event);
     }
 
-    public function applyUneModificationDeLaMarqueProduit($event)
+    public function applyUneModificationDeLaMarqueProduit(UneModificationDeLaMarqueProduit $event)
     {
         $this->marqueId = $event->getMarqueId();
     }
 
-    public function modifierLeProduit($command)
+    public function modifierLeProduit(ModifierProduitCommand $command)
     {
         if ($this->prix != ($prix = $command->getPrix())) {
             $this->modifierLePrix($prix);
@@ -182,6 +181,11 @@ class ProduitDomain extends DomainEvents
         }
     }
 
+    public function applyUneNouvellePhotoAEteAjoute(UneNouvellePhotoAEteAjoute $event)
+    {
+        $this->images[$event->getImageProduitId()] = $event->versTableau();
+    }
+
     public function modifierImageParDefaut($imagesParDefaut)
     {
         $event = new UneModificationDeLImageParDefautDuProduit($this->produitId, $imagesParDefaut);
@@ -190,11 +194,45 @@ class ProduitDomain extends DomainEvents
         $this->apply($event);
     }
 
-    public function supprimerUnProduit()
+    public function applyUneModificationDeLImageParDefautDuProduit(UneModificationDeLImageParDefautDuProduit $event)
+    {
+        $this->imagesParDefaut = $event->getImagesParDefaut();
+    }
+
+    public function supprimerUnProduit(SupprimerProduitCommand $command)
     {
         $event = new UnProduitAEteSupprime($this->produitId);
         $event->setVersion($this->getUpdateVersion());
         $this->enregistrementEvenement($event);
+    }
+
+    public function applyUnProduitAEteSupprime(UnProduitAEteSupprime $event)
+    {
+
+    }
+
+    /**
+     * Permet de déclencher l'évènement de suppression d'image produit.
+     *
+     * @param SupprimerImageProduitCommand $command
+     * @param string                       $repertoire
+     *
+     */
+    public function supprimerUneImageProduit(SupprimerImageProduitCommand $command, $repertoire)
+    {
+        $event = new UneImageProduitAEteSupprime($this->produitId, $command->getImageProduitId(), $repertoire);
+        $event->setVersion($this->getUpdateVersion());
+        $this->enregistrementEvenement($event);
+        $this->apply($event);
+    }
+
+    public function applyUneImageProduitAEteSupprime(UneImageProduitAEteSupprime $event)
+    {
+        $fichier = $event->getRepertoire() . $this->images[$event->getImageProduitId()]['url'];
+        if (file_exists($fichier)) {
+            unlink($fichier);
+        }
+        unset($this->images[$event->getImageProduitId()]);
     }
 
 }

@@ -3,7 +3,6 @@
 namespace Starkerxp\DocumentBundle\Upload;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class UploadService
 {

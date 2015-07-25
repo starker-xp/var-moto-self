@@ -4,9 +4,12 @@ namespace Starkerxp\EcommerceBundle\Controller;
 
 use Starkerxp\EcommerceBundle\Services\Command\Produit\CreerProduitCommand;
 use Starkerxp\EcommerceBundle\Services\Command\Produit\ModifierProduitCommand;
+use Starkerxp\EcommerceBundle\Services\Command\Produit\SupprimerImageProduitCommand;
 use Starkerxp\EcommerceBundle\Services\Command\Produit\SupprimerProduitCommand;
+use Starkerxp\EcommerceBundle\Services\Query\Produit\ImageProduitParDefautQuery;
 use Starkerxp\EcommerceBundle\Services\Query\Produit\ModifierProduitQuery;
 use Starkerxp\EcommerceBundle\Services\Query\Produit\ProduitListerQuery;
+use Starkerxp\EcommerceBundle\Services\Validator\Produit\ValiderSuppressionImageProduit;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -121,6 +124,25 @@ class AdministrationProduitsController extends Controller
         $commandBus->handle($entite);
 
         return new JsonResponse(["message" => "Produit supprimé"]);
+    }
+
+    public function deleteImageProduitAction(Request $request, $imageProduitId)
+    {
+        if (!$this->isCsrfTokenValid('', $request->get('_token'))) {
+            return new JsonResponse(["message" => "Le jeton d'authentification n'est pas valide."], 500);
+        }
+        $validator = new ValiderSuppressionImageProduit($this->get('bus.event.produit'), $request, $request->get('produitId'), $imageProduitId);
+        if (!$validator->validate()) {
+            return new JsonResponse(["message" => $validator->getErreurs()], 500);
+        }
+        $entite = new SupprimerImageProduitCommand();
+        $entite->setImageProduitId($imageProduitId);
+        $entite->setProduitId($request->get('produitId'));
+
+        $commandBus = $this->get('bus.command.produit');
+        $commandBus->handle($entite);
+
+        return new JsonResponse(["message" => "La photo a bien été supprimée !"]);
     }
 
 }

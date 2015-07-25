@@ -83,3 +83,9 @@ suppression_produit:
     methods:  [DELETE]
     requirements:
         produitId: "[a-z0-9]{8}\-[a-z0-9]{4}\-[a-z0-9]{4}\-[a-z0-9]{4}\-[a-z0-9]{12}"
+suppression_image_produit:
+    path: /administration/produits/supprimer-image-{imageProduitId}.html
+    defaults: { _controller: StarkerxpEcommerceBundle:AdministrationProduits:deleteImageProduit }
+    methods:  [DELETE]
+    requirements:
+        imageProduitId: "[a-z0-9]{8}\-[a-z0-9]{4}\-[a-z0-9]{4}\-[a-z0-9]{4}\-[a-z0-9]{12}"
