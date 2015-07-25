@@ -6,7 +6,6 @@ use Starkerxp\EcommerceBundle\Services\Command\Produit\CreerProduitCommand;
 use Starkerxp\EcommerceBundle\Services\Command\Produit\ModifierProduitCommand;
 use Starkerxp\EcommerceBundle\Services\Command\Produit\SupprimerImageProduitCommand;
 use Starkerxp\EcommerceBundle\Services\Command\Produit\SupprimerProduitCommand;
-use Starkerxp\EcommerceBundle\Services\Query\Produit\ImageProduitParDefautQuery;
 use Starkerxp\EcommerceBundle\Services\Query\Produit\ModifierProduitQuery;
 use Starkerxp\EcommerceBundle\Services\Query\Produit\ProduitListerQuery;
 use Starkerxp\EcommerceBundle\Services\Validator\Produit\ValiderSuppressionImageProduit;
@@ -73,10 +72,10 @@ class AdministrationProduitsController extends Controller
         $queryBus = $this->get('bus.event.produit');
         $produit = $queryBus->handle($produitQuery);
 
-        $entite = new ModifierProduitCommand();
-        $entite->depuisDTO($produit);
+        $command = new ModifierProduitCommand();
+        $command->depuisDTO($produit);
 
-        $form = $this->createForm($this->get('form.modifier.produit'), $entite, [
+        $form = $this->createForm($this->get('form.modifier.produit'), $command, [
             'action' => $this->generateUrl('modification_produit', ['produitId' => $produitId]),
         ]);
 
@@ -90,10 +89,10 @@ class AdministrationProduitsController extends Controller
 
     public function putAction(Request $request, $produitId)
     {
-        $entite = new ModifierProduitCommand();
-        $entite->setProduitId($produitId);
+        $command = new ModifierProduitCommand();
+        $command->setProduitId($produitId);
 
-        $form = $this->createForm($this->get('form.modifier.produit'), $entite, [
+        $form = $this->createForm($this->get('form.modifier.produit'), $command, [
             'action' => $this->generateUrl('modification_produit', ['produitId' => $produitId]),
         ]);
 
@@ -117,11 +116,11 @@ class AdministrationProduitsController extends Controller
             return new JsonResponse(["message" => "Erreur token"], 500);
         }
 
-        $entite = new SupprimerProduitCommand();
-        $entite->setProduitId($produitId);
+        $command = new SupprimerProduitCommand();
+        $command->setProduitId($produitId);
 
         $commandBus = $this->get('bus.command.produit');
-        $commandBus->handle($entite);
+        $commandBus->handle($command);
 
         return new JsonResponse(["message" => "Produit supprimé"]);
     }
@@ -131,16 +130,17 @@ class AdministrationProduitsController extends Controller
         if (!$this->isCsrfTokenValid('', $request->get('_token'))) {
             return new JsonResponse(["message" => "Le jeton d'authentification n'est pas valide."], 500);
         }
-        $validator = new ValiderSuppressionImageProduit($this->get('bus.event.produit'), $request, $request->get('produitId'), $imageProduitId);
+        $command = new SupprimerImageProduitCommand();
+        $command->setImageProduitId($imageProduitId);
+        $command->setProduitId($request->get('produitId'));
+
+        $validator = new ValiderSuppressionImageProduit($this->get('bus.event.produit'), $request, $command);
         if (!$validator->validate()) {
             return new JsonResponse(["message" => $validator->getErreurs()], 500);
         }
-        $entite = new SupprimerImageProduitCommand();
-        $entite->setImageProduitId($imageProduitId);
-        $entite->setProduitId($request->get('produitId'));
 
         $commandBus = $this->get('bus.command.produit');
-        $commandBus->handle($entite);
+        $commandBus->handle($command);
 
         return new JsonResponse(["message" => "La photo a bien été supprimée !"]);
     }
