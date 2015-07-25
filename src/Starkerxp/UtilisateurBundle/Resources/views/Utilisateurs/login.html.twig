@@ -1,4 +1,4 @@
-{% extends '::base.html.twig' %}
+{% extends '::homepage.html.twig' %}
 
 {% block body %}
     {% if error %}
@@ -6,12 +6,24 @@
     {% endif %}
 
     <form action="{{ path('identification') }}" method="post">
-        <label for="username">Adresse e-mail :</label>
-        <input type="text" id="username" name="_username" value="{{ last_username }}" />
-
-        <label for="password">Mot de passe :</label>
-        <input type="password" id="password" name="_password" />
-
-        <button type="submit">Se Connecter</button>
+        <div style="width: 300px;" class="form-group center center-block">
+            <div class="block-content-inner">
+                <div class="row">
+                    <label for="username">Adresse e-mail :</label>
+                    <input type="text" id="username" name="_username" class="form-control" value="{{ last_username }}" />
+                </div>
+            </div>
+            <div class="block-content-inner">
+                <div class="row">
+                    <label for="password">Mot de passe :</label>
+                    <input type="password" id="password" name="_password" class="form-control" />
+                </div>
+            </div><br/>
+            <div class="block-content-inner">
+                <div class="row">
+                    <input type="submit"  class="btn btn-secondary" value="Se Connecter"/>
+                </div>
+            </div>
+        </div>
     </form>
 {% endblock %}
